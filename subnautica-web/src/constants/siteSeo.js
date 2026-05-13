@@ -10,9 +10,9 @@ export const HOME_PAGE_DOCUMENT_TITLE = 'Subnautica Map - Subnautica interactive
 /** 路由未提供 meta.title 时的回退主题段（会经 buildDocumentTitle 加品牌后缀） */
 export const SITE_FALLBACK_TITLE_SEGMENT = 'Subnautica Map — interactive maps & guides'
 
-/** 默认 meta description：无域名，含核心词与免责 */
+/** 默认 meta description：约 140–160 英文字符；不含免责声明类套话 */
 export const SITE_DEFAULT_DESCRIPTION =
-  'Subnautica Map offers full-screen Subnautica and Below Zero interactive maps, survival walkthroughs, and a curated mod index. Independent fan site—not affiliated with Unknown Worlds Entertainment.'
+  'Full-screen Subnautica and Below Zero maps: biomes, pins, cave overlays, guides, mod listings, and Subnautica 2 map status—all in your browser.'
 
 /** 默认 meta keywords：无域名 */
 export const SITE_DEFAULT_KEYWORDS =

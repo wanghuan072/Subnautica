@@ -18,7 +18,7 @@ export default [
     seo: {
       title: 'InternetsLIVE H2.0 Vibrant Shader — Nexus Mods Subnautica mod 1',
       description:
-        'Fan site listing for Nexus Subnautica mod 1: InternetsLIVE H2.0 Vibrant Shader DX11 (SweetFX installer, F10 toggle). Not affiliated with Nexus Mods or Unknown Worlds.',
+        'Nexus Subnautica mod 1: InternetsLIVE H2.0 Vibrant Shader DX11—SweetFX installer, F10 toggle; legacy DX11 build—check patch notes before install.',
       keywords:
         'Subnautica mod, Nexus Mods, mod 1, InternetsLIVE, Vibrant Shader, SweetFX, DX11, Reshade-style, graphics, InternetsLuitjens',
     },
@@ -84,7 +84,7 @@ export default [
     seo: {
       title: 'AutosortLockers for Subnautica — Nexus mod 31',
       description:
-        'Fan summary of Nexus Subnautica mod 31 AutosortLockers by RandyKnapp: autosorter furniture, receptacles, filters, and install notes without embedding outbound links.',
+        'Summary of Nexus mod 31 AutosortLockers (RandyKnapp): autosorters, receptacles, filters, QMod/SMLHelper install context; no outbound links in body.',
       keywords:
         'Subnautica, AutosortLockers, Nexus mod 31, RandyKnapp, QModManager, SMLHelper, base storage, filtered lockers',
     },
@@ -169,7 +169,7 @@ export default [
     seo: {
       title: 'Moonpool Vehicle Repair for Subnautica — Nexus mod 51',
       description:
-        'Fan summary of Nexus Subnautica mod 51 Moonpool Vehicle Repair: BepInEx moonpool auto-repair, config, Seamoth vs PRAWN health notes—no outbound links in article body.',
+        'Summary of Nexus mod 51 Moonpool Vehicle Repair: BepInEx moonpool auto-repair, config, Seamoth vs PRAWN health notes; readme-backed; no outbound links in body.',
       keywords:
         'Subnautica, Moonpool Vehicle Repair, Nexus mod 51, ahk1221, Cookie, BepInEx, moonpool repair, Seamoth, PRAWN',
     },
@@ -254,7 +254,7 @@ export default [
     seo: {
       title: 'Custom Load Screen for Below Zero — Nexus mod 8',
       description:
-        'Fan summary of Nexus Subnautica: Below Zero mod 8 Custom Load Screen by KaiTheBat: QMods loading image swap, install steps, and artwork disclaimer—no outbound links in article body.',
+        'Summary of BZ Nexus mod 8 Custom Load Screen (KaiTheBat): QMods load-screen image swap, install steps, artwork guidance; no outbound links in body.',
       keywords:
         'Below Zero, Custom Load Screen, Nexus mod 8, KaiTheBat, QMods, loading screen, Subnautica BZ cosmetic',
     },
@@ -318,7 +318,7 @@ export default [
     seo: {
       title: 'Custom command for Below Zero — Nexus mod 7',
       description:
-        'Fan summary of Nexus Subnautica: Below Zero mod 7 Custom command by Coticvo: spawn/size/friend/pickup console helpers, BepInEx + Nautilus BZ deps—no outbound links in article body.',
+        'Summary of BZ Nexus mod 7 Custom command (Coticvo): spawn, size, friend, pickup console helpers; BepInEx + Nautilus BZ dependencies; no outbound links in body.',
       keywords:
         'Below Zero, Custom command, Nexus mod 7, Coticvo, BepInEx, Nautilus BZ, console commands, spawn, cheat',
     },
@@ -401,7 +401,7 @@ export default [
     seo: {
       title: 'BelowZero Altitude Meter for Below Zero — Nexus mod 51',
       description:
-        'Fan summary of Nexus Subnautica: Below Zero mod 51 BelowZero Altitude Meter by ihatetn931: land altitude HUD, toggles, colours, QMod stack—no outbound links in article body.',
+        'Summary of BZ Nexus mod 51 Altitude Meter (ihatetn931): land altitude HUD, toggles, colour presets, QMod stack; install cautions; no outbound links in body.',
       keywords:
         'Below Zero, Altitude Meter, Nexus mod 51, ihatetn931, QModManager, SMLHelper Zero, HUD, sea level',
     },

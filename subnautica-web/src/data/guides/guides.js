@@ -15,7 +15,7 @@ export default [
     seo: {
       title: 'Subnautica survival and progression guide for players',
       description:
-        'Detailed Subnautica tips: Lifepod 5 priorities, Aurora radiation, Seamoth and Cyclops depth, biomes, bases, leviathans, and story pacing—written for real playthroughs.',
+        'Subnautica tips: Lifepod 5 priorities, Aurora radiation, Seamoth and Cyclops depth, biomes, bases, leviathans, and story pacing—built for real playthroughs.',
       keywords:
         'Subnautica guide, 4546B, Lifepod 5, Seamoth depth module, Cyclops, PRAWN, Aurora radiation suit, Safe Shallows, Kelp Forest, scanner fragments, habitat builder',
     },
@@ -230,7 +230,7 @@ export default [
     imageAlt: "A massive Reefback Leviathan drifting through deep ocean waters with a diverse ecosystem on its back.",
     seo: {
       title: "Marine Biology Guide: Alien Species and Ecosystems Analysis",
-      description: "Detailed biological study of alien marine life, covering predator-prey dynamics, symbiosis, and the physiology of deep-sea Leviathans.",
+      description: "Biological study of alien marine life: predator-prey dynamics, symbiosis, and deep-sea Leviathan physiology—framed for Subnautica exploration planning.",
       keywords: "alien marine biology, deep sea ecology, predatory fish behavior, leviathan classification, underwater survival guide"
     },
     classify: 'game1',
@@ -419,7 +419,7 @@ export default [
     seo: {
       title: 'Below Zero survival guide for players',
       description:
-        'Below Zero tips: Robin’s drop pod loop, cold exposure, Seatruck modules, Twisty Bridges oxygen plants, Lilypads, Crystal Caves, Shadow Leviathan zones, and surface travel.',
+        'Below Zero: Robin’s drop pod loop, cold exposure, Seatruck modules, Twisty Bridges oxygen, Lilypads, Crystal Caves, Shadow Leviathan zones, surface travel.',
       keywords:
         'Below Zero guide, Seatruck, Snowfox, thermal lily, Robin Ayou, Delta Station, Twisty Bridges, Pengwing, Shadow Leviathan, cold survival',
     },
@@ -700,7 +700,7 @@ export default [
         seo: {
       title: 'Subnautica 2 early access guide for players and co-op squads',
       description:
-        'Subnautica 2 EA tips: four-player co-op expectations, the Tadpole submersible, ocean currents, DNA-style upgrades, backups, performance, and how to read patch notes.',
+        'Subnautica 2 early access: four-player co-op rhythm, Tadpole submersible, currents, DNA-style upgrades, save backups, performance, and reading patch notes.',
       keywords:
         'Subnautica 2 guide, early access, co-op multiplayer, Tadpole submersible, Unknown Worlds, save backup, Game Pass, DNA upgrades',
     },

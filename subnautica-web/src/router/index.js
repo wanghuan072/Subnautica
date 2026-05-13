@@ -65,7 +65,7 @@ const routes = [
     meta: {
       title: 'Subnautica Map — SN1 guides, mods & interactive map',
       description:
-        'Subnautica (SN1): progression and hazard guides, curated mod entries with sources, Nitrox multiplayer context, PC requirements, and FAQ—plus a direct link to the full-screen Subnautica interactive map.',
+        'Subnautica guides for survival and hazards, mod summaries with install context, Nitrox notes, PC targets, FAQ, and a link to the full-screen interactive map.',
       keywords:
         'Subnautica Map, Subnautica guides, Subnautica survival tips, Subnautica mod list, Nitrox, Subnautica interactive map',
     },
@@ -77,7 +77,7 @@ const routes = [
     meta: {
       title: 'Subnautica: Below Zero — guides, mods & interactive map',
       description:
-        'Below Zero: Seatruck routing, cold and altitude survival guides, mod compatibility notes, PC requirements, FAQ, and the full-screen Below Zero interactive map from the same navigation.',
+        'Below Zero guides for Seatruck routing, cold survival, and mods; PC targets, FAQ, and one-click access to the full-screen Below Zero interactive browser map.',
       keywords:
         'Subnautica Map, Below Zero guide, Subnautica Below Zero map, Below Zero mods, Seatruck tips, Arctic survival, interactive map',
     },
@@ -89,7 +89,7 @@ const routes = [
     meta: {
       title: 'Subnautica 2 — early access guides, co-op & mod list',
       description:
-        'Subnautica 2: early access survival and co-op guides, performance-minded PC targets, curated mod picks, and FAQ. Unofficial fan reference—not affiliated with Unknown Worlds Entertainment.',
+        'Subnautica 2 early-access guides for co-op and survival, curated mod picks, PC targets, FAQ, and the interactive map roadmap when public data is available.',
       keywords:
         'Subnautica Map, Subnautica 2 guide, Subnautica 2 early access, Subnautica 2 co-op, Subnautica 2 mods, Subnautica 2 map status',
     },
@@ -134,7 +134,7 @@ const routes = [
       title: 'Subnautica interactive map — full-screen atlas: biomes, resources & caves',
       layout: 'map',
       description:
-        'Full-screen Subnautica interactive world map: biome polygons, resource and POI pins, layer opacity controls, and optional cave depth overlay—runs in your browser; unofficial fan atlas.',
+        'Full-screen Subnautica map: biome polygons, resource and POI pins, opacity sliders, optional cave depth layer—pan and zoom in your browser with MapLibre.',
       keywords:
         'Subnautica Map, Subnautica interactive map, Subnautica biome map, Subnautica resource map, cave map, MapLibre atlas, full screen map',
     },
@@ -147,7 +147,7 @@ const routes = [
       title: 'Subnautica Below Zero interactive map — ice shelf, biomes & POIs',
       layout: 'map',
       description:
-        'Full-screen Subnautica: Below Zero interactive map: ice shelf and underwater biome layers, markers, and the same pan–zoom atlas tools as the Subnautica map. Unofficial fan project in your browser.',
+        'Full-screen Below Zero map: ice shelf and underwater biome layers, markers, opacity controls—same atlas tools as the Subnautica map, tuned for polar routes.',
       keywords:
         'Subnautica Map, Below Zero interactive map, Subnautica Below Zero map, Below Zero biome map, Below Zero resource locations, full screen map',
     },
