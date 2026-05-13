@@ -8,7 +8,7 @@ const toc = [
   { id: 'hub-faq', label: 'FAQ' },
 ]
 
-/** 左侧 TOC + 页内锚点滚动（各 hub 页共用，不含文案数据） */
+/** 左侧 TOC + 页内锚点滚动（各作品导览页共用，不含文案数据） */
 export function useGameHubToc() {
   const activeTocId = ref('hub-overview')
 

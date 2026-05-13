@@ -1,6 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { getGuideByAddressBar, getModByAddressBar } from '@/data/gameHubResolve.js'
-import { SITE_DEFAULT_DESCRIPTION, SITE_DEFAULT_KEYWORDS } from '@/constants/siteSeo.js'
+import {
+  HOME_PAGE_DOCUMENT_TITLE,
+  SITE_DEFAULT_DESCRIPTION,
+  SITE_DEFAULT_KEYWORDS,
+} from '@/constants/siteSeo.js'
 import { legalPageMeta } from '@/constants/siteLegalMeta.js'
 import { seoConfig } from '@/seo/config.js'
 import {
@@ -18,7 +22,8 @@ const routes = [
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
     meta: {
-      title: 'Subnautica Map — Interactive maps & survival guide hub',
+      completeTitle: true,
+      title: HOME_PAGE_DOCUMENT_TITLE,
       description: SITE_DEFAULT_DESCRIPTION,
       keywords: SITE_DEFAULT_KEYWORDS,
     },
@@ -58,10 +63,11 @@ const routes = [
     name: 'subnautica',
     component: () => import('@/views/SubnauticaGuideView.vue'),
     meta: {
-      title: 'Subnautica — Guides, mods & hub',
+      title: 'Subnautica Map — SN1 guides, mods & interactive map',
       description:
-        'Subnautica hub on subnauticamap.org: guides, mod index, multiplayer context, PC requirements, and FAQ. Jump to the interactive Subnautica map from the same site.',
-      keywords: 'Subnautica hub, subnauticamap.org Subnautica, fan guides, Nitrox context, Subnautica map link',
+        'Subnautica (SN1): progression and hazard guides, curated mod entries with sources, Nitrox multiplayer context, PC requirements, and FAQ—plus a direct link to the full-screen Subnautica interactive map.',
+      keywords:
+        'Subnautica Map, Subnautica guides, Subnautica survival tips, Subnautica mod list, Nitrox, Subnautica interactive map',
     },
   },
   {
@@ -69,10 +75,11 @@ const routes = [
     name: 'subnautica-below-zero',
     component: () => import('@/views/SubnauticaBelowZeroGuideView.vue'),
     meta: {
-      title: 'Subnautica: Below Zero — Guides, mods & hub',
+      title: 'Subnautica: Below Zero — guides, mods & interactive map',
       description:
-        'Below Zero hub on subnauticamap.org: ice-shelf routing tips, mod compatibility notes, PC requirements, and FAQ. Links to the Below Zero interactive map on the same domain.',
-      keywords: 'Below Zero hub, subnauticamap.org Below Zero, polar survival guides, Below Zero map',
+        'Below Zero: Seatruck routing, cold and altitude survival guides, mod compatibility notes, PC requirements, FAQ, and the full-screen Below Zero interactive map from the same navigation.',
+      keywords:
+        'Subnautica Map, Below Zero guide, Subnautica Below Zero map, Below Zero mods, Seatruck tips, Arctic survival, interactive map',
     },
   },
   {
@@ -80,10 +87,11 @@ const routes = [
     name: 'subnautica-2',
     component: () => import('@/views/Subnautica2GuideView.vue'),
     meta: {
-      title: 'Subnautica 2 — Guides, mods & hub',
+      title: 'Subnautica 2 — early access guides, co-op & mod list',
       description:
-        'Subnautica 2 hub on subnauticamap.org: early access co-op expectations, PC targets, and FAQ. Unofficial fan reference; not affiliated with Unknown Worlds Entertainment.',
-      keywords: 'Subnautica 2 hub, subnauticamap.org Subnautica 2, UE5 survival, fan co-op notes',
+        'Subnautica 2: early access survival and co-op guides, performance-minded PC targets, curated mod picks, and FAQ. Unofficial fan reference—not affiliated with Unknown Worlds Entertainment.',
+      keywords:
+        'Subnautica Map, Subnautica 2 guide, Subnautica 2 early access, Subnautica 2 co-op, Subnautica 2 mods, Subnautica 2 map status',
     },
   },
   {
@@ -123,11 +131,12 @@ const routes = [
     name: 'map-subnautica',
     component: () => import('@/views/maps/SubnauticaMapView.vue'),
     meta: {
-      title: 'Subnautica Map — Full-screen interactive world map',
+      title: 'Subnautica interactive map — full-screen atlas: biomes, resources & caves',
       layout: 'map',
       description:
-        'Full-screen Subnautica interactive map on subnauticamap.org: biomes, pins, and cave sheets in your browser. Unofficial fan atlas; performance depends on your device.',
-      keywords: 'Subnautica interactive map, subnauticamap.org map, fan atlas, biome map',
+        'Full-screen Subnautica interactive world map: biome polygons, resource and POI pins, layer opacity controls, and optional cave depth overlay—runs in your browser; unofficial fan atlas.',
+      keywords:
+        'Subnautica Map, Subnautica interactive map, Subnautica biome map, Subnautica resource map, cave map, MapLibre atlas, full screen map',
     },
   },
   {
@@ -135,11 +144,12 @@ const routes = [
     name: 'map-below-zero',
     component: () => import('@/views/maps/SubnauticaBelowZeroMapView.vue'),
     meta: {
-      title: 'Subnautica: Below Zero Map — Full-screen interactive world map',
+      title: 'Subnautica Below Zero interactive map — ice shelf, biomes & POIs',
       layout: 'map',
       description:
-        'Below Zero interactive map on subnauticamap.org: surface routes and underwater biomes in a browser atlas. Unofficial fan project.',
-      keywords: 'Below Zero map, subnauticamap.org Below Zero atlas, interactive map',
+        'Full-screen Subnautica: Below Zero interactive map: ice shelf and underwater biome layers, markers, and the same pan–zoom atlas tools as the Subnautica map. Unofficial fan project in your browser.',
+      keywords:
+        'Subnautica Map, Below Zero interactive map, Subnautica Below Zero map, Below Zero biome map, Below Zero resource locations, full screen map',
     },
   },
   {
@@ -147,10 +157,11 @@ const routes = [
     name: 'map-subnautica-2',
     component: () => import('@/views/maps/Subnautica2MapView.vue'),
     meta: {
-      title: 'Subnautica 2 Map — Coming later',
+      title: 'Subnautica 2 interactive map — atlas status & roadmap',
       description:
-        'Placeholder route for the Subnautica 2 atlas on subnauticamap.org. Status updates will appear here as datasets become available.',
-      keywords: 'Subnautica 2 map, subnauticamap.org Subnautica 2 atlas',
+        'Subnautica 2 map status: when a public dataset can power a browser atlas, what is placeholder today, and how updates will be announced—no fabricated coordinates.',
+      keywords:
+        'Subnautica Map, Subnautica 2 map, Subnautica 2 interactive map, Subnautica 2 atlas, map coming soon, early access map',
     },
   },
 ]
@@ -172,7 +183,7 @@ router.afterEach((to) => {
       applyDocumentSeo({
         path,
         title: buildDocumentTitle('Guide not found'),
-        description: 'The requested guide is not available on subnauticamap.org.',
+        description: 'The requested guide could not be found.',
         keywords: seoConfig.defaults.keywords,
       })
       return
@@ -210,7 +221,7 @@ router.afterEach((to) => {
       applyDocumentSeo({
         path,
         title: buildDocumentTitle('Mod not found'),
-        description: 'The requested mod entry is not available on subnauticamap.org.',
+        description: 'The requested mod entry could not be found.',
         keywords: seoConfig.defaults.keywords,
       })
       return
@@ -237,7 +248,8 @@ router.afterEach((to) => {
     return
   }
 
-  const title = buildDocumentTitle(to.meta?.title ?? seoConfig.defaults.title)
+  const rawTitle = to.meta?.title ?? seoConfig.defaults.title
+  const title = to.meta?.completeTitle ? String(rawTitle) : buildDocumentTitle(rawTitle)
   const description = to.meta?.description || seoConfig.defaults.description
   const keywords = to.meta?.keywords || seoConfig.defaults.keywords
 

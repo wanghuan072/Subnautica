@@ -28,7 +28,7 @@
                 <p class="gh-eyebrow">Unknown Worlds · next expedition</p>
                 <h1 id="hub-hero-title" class="gh-hero-title">Subnautica 2</h1>
               </div>
-              <p class="gh-hero-meta">Hub · Map · Guides · Mods</p>
+              <p class="gh-hero-meta">Map · Guides · Mods</p>
             </div>
             <div class="gh-hero-lead gh-rich">
               <p>
@@ -55,8 +55,8 @@
               <p class="gh-rich-foot">
                 Atlas status for the sequel lives on the
                 <RouterLink to="/maps/subnautica-2">Subnautica 2 map</RouterLink> route; the
-                <RouterLink to="/">home page</RouterLink> explains how this hub treats spoilers. Subnautica 2 mod listings
-                will appear in this hub’s Mods section when we add curated entries; until then use your storefront and
+                <RouterLink to="/">home page</RouterLink> explains how this overview treats spoilers. Subnautica 2 mod listings
+                will appear in the Mods section when we add curated entries; until then use your storefront and
                 official Unknown Worlds channels for tooling news.
               </p>
             </div>
@@ -156,7 +156,7 @@
                 <p>
                   While mod support matures, bookmark the
                   <RouterLink to="/guides/sn2-early-access-co-op-players-guide">early access &amp; co-op players guide</RouterLink>
-                  on this hub
+                  on this page
                   for save hygiene and squad etiquette.
                 </p>
               </div>
@@ -227,7 +227,7 @@
                   It continues the franchise’s underwater survival fantasy on a <strong>new</strong> world. Treat lore
                   connections as spoilers and discover them in-game when possible. Older titles remain on
                   <RouterLink to="/subnautica">Subnautica</RouterLink> and
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> hubs.
+                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> overview pages.
                 </p>
               </div>
             </article>
@@ -252,10 +252,10 @@
               </div>
             </article>
             <article class="gh-faq-row">
-              <h3 class="gh-faq-row__q">How do I compare all three hubs quickly?</h3>
+              <h3 class="gh-faq-row__q">How do I compare all three games quickly?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  Use the <RouterLink to="/">home page</RouterLink> map row, then open each title’s hub (
+                  Use the <RouterLink to="/">home page</RouterLink> map row, then open each title (
                   <RouterLink to="/subnautica">Subnautica</RouterLink>,
                   <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink>,
                   <RouterLink to="/subnautica-2">Subnautica 2</RouterLink>) for tailored guides and mods.

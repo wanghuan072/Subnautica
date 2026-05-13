@@ -1,38 +1,38 @@
 /** 法律 / 站点信息页的 SEO meta（供路由使用） */
 export const legalPageMeta = {
   about: {
-    title: 'About subnauticamap.org — fan-made Subnautica maps & guide hub',
+    title: 'About Subnautica Map — fan maps, guides & editorial scope',
     description:
-      'Learn how subnauticamap.org curates interactive Subnautica, Below Zero, and Subnautica 2 maps, spoiler-conscious guides, and mod listings. Independent fan project; not affiliated with Unknown Worlds Entertainment.',
+      'Learn how Subnautica Map curates spoiler-aware guides, links to full-screen Subnautica and Below Zero interactive atlases, and lists mods with clear sources. Independent fan project—not affiliated with Unknown Worlds Entertainment.',
     keywords:
-      'about subnauticamap.org, Subnautica fan maps, Below Zero atlas, Subnautica 2 hub, unofficial guides, Unknown Worlds disclaimer',
+      'about Subnautica Map, fan interactive map, Subnautica Below Zero atlas, Subnautica 2 guides, unofficial guides, editorial standards',
   },
   contact: {
-    title: 'Contact subnauticamap.org — support & corrections',
+    title: 'Contact Subnautica Map — map fixes, accessibility & legal',
     description:
-      'Contact the maintainer of subnauticamap.org for map corrections, accessibility issues, or legal notices. Email-only channel; no forms; not a substitute for Unknown Worlds customer support.',
+      'Email the maintainer for map data corrections, accessibility issues, or trademark and copyright notices. Not a channel for Unknown Worlds Entertainment player support.',
     keywords:
-      'contact subnauticamap.org, fan site email, map corrections, Subnautica map feedback, unofficial site contact',
+      'contact Subnautica Map, map corrections, accessibility, fan site legal, DMCA contact, maintainer email',
   },
   privacy: {
-    title: 'Privacy policy — subnauticamap.org',
+    title: 'Privacy Policy — Subnautica Map',
     description:
-      'Privacy policy for subnauticamap.org: logs, cookies, local storage for maps, children’s privacy, international transfers, and how to exercise data rights. No account system by default.',
+      'Privacy policy: server logs, essential cookies, MapLibre-related browser storage for maps, minors, international visitors, and how to request information or deletion. No accounts by default.',
     keywords:
-      'subnauticamap.org privacy, fan site privacy policy, Subnautica map cookies, browser local storage maps',
+      'Subnautica Map privacy, fan site privacy policy, map cookies, browser storage atlas, interactive map data',
   },
   terms: {
-    title: 'Terms of use — subnauticamap.org',
+    title: 'Terms of Use — Subnautica Map',
     description:
-      'Terms of use for subnauticamap.org: acceptable use, fan content, no warranties, limitation of liability, third-party mods, governing law, and how to report abuse.',
+      'Terms of use: acceptable use, fan-made content, third-party mods, no warranties, liability limits, linking rules, and how to report abuse of the site or its maps.',
     keywords:
-      'subnauticamap.org terms, fan site terms of use, Subnautica map disclaimer, liability limitation',
+      'Subnautica Map terms, fan site terms of use, interactive map disclaimer, mod listing liability, acceptable use',
   },
   copyright: {
-    title: 'Copyright & trademarks — subnauticamap.org',
+    title: 'Copyright & Trademarks — Subnautica Map',
     description:
-      'Trademark notice for Unknown Worlds Entertainment titles, copyright on original subnauticamap.org content, fair use, DMCA-style requests, and font licences.',
+      'Unknown Worlds Entertainment trademarks for Subnautica titles, copyright on original site text and graphics, fair-use quoting, and how rights holders can request changes or removals.',
     keywords:
-      'Subnautica trademark notice, Unknown Worlds Entertainment disclaimer, subnauticamap.org copyright, fan site DMCA',
+      'Subnautica trademark, Unknown Worlds disclaimer, fan site copyright, DMCA, fair use',
   },
 }

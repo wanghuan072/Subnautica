@@ -63,7 +63,7 @@
               Download
             </a>
             <p v-else class="detail__nodl">Download link not set.</p>
-            <RouterLink class="detail__back" :to="hubPath">Return to hub</RouterLink>
+            <RouterLink class="detail__back" :to="hubPath">Return to game page</RouterLink>
           </div>
         </aside>
       </div>

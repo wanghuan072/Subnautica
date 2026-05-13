@@ -28,7 +28,7 @@
                 <p class="gh-eyebrow">Unknown Worlds · polar chapter on 4546B</p>
                 <h1 id="hub-hero-title" class="gh-hero-title">Subnautica: Below Zero</h1>
               </div>
-              <p class="gh-hero-meta">Hub · Map · Guides · Mods</p>
+              <p class="gh-hero-meta">Map · Guides · Mods</p>
             </div>
             <div class="gh-hero-lead gh-rich">
               <p>
@@ -50,7 +50,7 @@
               <p class="gh-rich-foot">
                 New to the planet? Many players still begin with <RouterLink to="/subnautica">Subnautica (2018)</RouterLink>
                 for pacing, but it is optional. Atlas:
-                <RouterLink to="/maps/subnautica-below-zero">Below Zero map</RouterLink> · Hub index:
+                <RouterLink to="/maps/subnautica-below-zero">Below Zero map</RouterLink> · Section index:
                 <RouterLink to="/">home</RouterLink>.
               </p>
             </div>
@@ -148,7 +148,7 @@
                   Microsoft Store vs Epic) before copying someone else’s install recipe.
                 </p>
                 <p>
-                  For Below Zero extensions, open your usual mod index in a separate browser tab (this hub does not embed
+                  For Below Zero extensions, open your usual mod index in a separate browser tab (this page does not embed
                   outbound links in article prose). Always read the author’s compatibility notes before you merge loaders.
                 </p>
               </div>
@@ -230,7 +230,7 @@
               <h3 class="gh-faq-row__q">Are saves transferable between games?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  No—each title keeps its own save slots. Jumping between hubs? Browse
+                  No—each title keeps its own save slots. Switching between games? Browse
                   <RouterLink to="/subnautica">Subnautica</RouterLink> and
                   <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> pages separately.
                 </p>

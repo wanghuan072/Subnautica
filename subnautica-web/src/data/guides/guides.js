@@ -1,6 +1,6 @@
 /** @typedef {{ id: number, title: string, description: string, tags: string[], publishDate: string, imageUrl: string, imageAlt: string, classify: 'game1'|'game2'|'game3', seo: { title: string, description: string, keywords: string }, addressBar: string, detailsHtml: string }} Guide */
 
-/** @type {Guide[]} 每作一篇长指南；classify 对应各 hub 页 */
+/** @type {Guide[]} 每作一篇长指南；classify 对应各作品导览页 */
 export default [
     {
     id: 101,

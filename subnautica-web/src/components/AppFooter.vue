@@ -27,8 +27,8 @@
           </ul>
         </nav>
 
-        <nav class="app-footer__nav" aria-label="Game hubs">
-          <p class="app-footer__nav-k">Hubs</p>
+        <nav class="app-footer__nav" aria-label="Games">
+          <p class="app-footer__nav-k">Games</p>
           <ul class="app-footer__links">
             <li><RouterLink to="/subnautica">Subnautica</RouterLink></li>
             <li><RouterLink to="/subnautica-below-zero">Below Zero</RouterLink></li>

@@ -53,7 +53,7 @@
                 </dd>
               </div>
             </dl>
-            <RouterLink class="detail__back" :to="hubPath">Return to hub</RouterLink>
+            <RouterLink class="detail__back" :to="hubPath">Return to game page</RouterLink>
           </div>
         </aside>
       </div>

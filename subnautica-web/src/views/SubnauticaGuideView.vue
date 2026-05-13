@@ -28,7 +28,7 @@
                 <p class="gh-eyebrow">Unknown Worlds · survival on 4546B</p>
                 <h1 id="hub-hero-title" class="gh-hero-title">Subnautica</h1>
               </div>
-              <p class="gh-hero-meta">Hub · Map · Guides · Mods</p>
+              <p class="gh-hero-meta">Map · Guides · Mods</p>
             </div>
             <div class="gh-hero-lead gh-rich">
               <p>
@@ -52,7 +52,7 @@
                 </li>
               </ul>
               <p class="gh-rich-foot">
-                This fan hub is <strong>not</strong> affiliated with Unknown Worlds. For the polar follow-up on the
+                This fan site is <strong>not</strong> affiliated with Unknown Worlds. For the polar follow-up on the
                 same planet, see <RouterLink to="/subnautica-below-zero">Subnautica: Below Zero</RouterLink>; for the
                 wider site overview, start at the <RouterLink to="/">home page</RouterLink>. Atlas entry:
                 <RouterLink to="/maps/subnautica">Subnautica interactive map</RouterLink>.
@@ -69,7 +69,7 @@
                   <img src="/images/hero-01.jpg" alt="" />
                 </div>
                 <div class="gh-mapslot__body">
-                  <h2 class="gh-mapslot__title">Subnautica 2 Interactive map</h2>
+                  <h2 class="gh-mapslot__title">Subnautica interactive map</h2>
                   <p class="gh-mapslot__desc">Biome layers, pins, and cave sheets for this title.</p>
                   <span class="gh-mapslot__action">Open map</span>
                 </div>
@@ -154,7 +154,7 @@
                   compatibility, stability, and save safety depend entirely on each project’s current release notes.
                 </p>
                 <p>
-                  If you are browsing graphics tweaks, see the hub listing for
+                  If you are browsing graphics tweaks, see the listing for
                   <RouterLink to="/mods/mod-sn1-nexus-1-internetslive-vibrant-shader-dx11">
                     Nexus Mods #1 — InternetsLIVE Vibrant Shader
                   </RouterLink>
@@ -245,7 +245,7 @@
                 <p>
                   Not in the shipped single-player product. Unofficial multiplayer exists only through community mods
                   and launchers; treat them as experimental. Official co-op is a headline feature of the newer
-                  <RouterLink to="/subnautica-2">Subnautica 2</RouterLink> marketing—see that hub for how access works in
+                  <RouterLink to="/subnautica-2">Subnautica 2</RouterLink> marketing—see that title’s overview for how access works in
                   each phase.
                 </p>
               </div>
@@ -256,7 +256,7 @@
                 <p>
                   Start with the
                   <RouterLink to="/guides/sn1-survival-and-progression-players-guide">survival and progression players guide</RouterLink>
-                  in this hub, then cross-check your route on the
+                  in this section, then cross-check your route on the
                   <RouterLink to="/maps/subnautica">map viewer</RouterLink> before you push depth.
                 </p>
               </div>

@@ -27,11 +27,11 @@
                 <span class="home-hero-title__gradient">Subnautica Interactive Map</span>
               </h1>
             </div>
-            <p class="home-hero-meta">Fan hub · Two live atlases · Guides soon</p>
+            <p class="home-hero-meta">Fan site · Two live atlases · Guides soon</p>
           </div>
           <div class="home-hero-lead">
             <p>
-              This hub wraps a MapLibre-powered atlas for the original <em>Subnautica</em> and a separate build for
+              This site wraps a MapLibre-powered atlas for the original <em>Subnautica</em> and a separate build for
               <em>Subnautica: Below Zero</em>: biome polygons, region labels, resource and POI pins, opacity sliders for
               the base raster and cave sheet, and the usual pan–zoom gestures you expect from a desktop-grade map.
             </p>

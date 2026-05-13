@@ -1,7 +1,11 @@
 /**
  * subnauticamap.org — 生产 canonical、OG、Twitter、sitemap 使用此域名。
  */
-import { SITE_DEFAULT_DESCRIPTION, SITE_DEFAULT_KEYWORDS } from '../constants/siteSeo.js'
+import {
+  SITE_DEFAULT_DESCRIPTION,
+  SITE_DEFAULT_KEYWORDS,
+  SITE_FALLBACK_TITLE_SEGMENT,
+} from '../constants/siteSeo.js'
 
 export const seoConfig = {
   domain: 'subnauticamap.org',
@@ -10,7 +14,7 @@ export const seoConfig = {
   /** 默认分享图（站内路径，运行时拼为绝对 URL） */
   defaultOgImage: '/images/hero-01.jpg',
   defaults: {
-    title: 'Subnautica Map — Interactive maps & survival guide hub',
+    title: SITE_FALLBACK_TITLE_SEGMENT,
     description: SITE_DEFAULT_DESCRIPTION,
     keywords: SITE_DEFAULT_KEYWORDS,
     author: 'Subnautica Map',

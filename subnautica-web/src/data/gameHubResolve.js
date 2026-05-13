@@ -1,7 +1,7 @@
 import guides from '@/data/guides/guides.js'
 import mods from '@/data/mods/mods.js'
 
-/** 面包屑等仅需路径与标题，勿再依赖整页 hub 文案对象 */
+/** 面包屑等仅需路径与标题，勿再依赖整页导览文案对象 */
 export const hubBriefByClassify = {
   game1: { hubPath: '/subnautica', hubTitle: 'Subnautica' },
   game2: { hubPath: '/subnautica-below-zero', hubTitle: 'Subnautica: Below Zero' },

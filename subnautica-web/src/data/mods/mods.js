@@ -18,7 +18,7 @@ export default [
     seo: {
       title: 'InternetsLIVE H2.0 Vibrant Shader — Nexus Mods Subnautica mod 1',
       description:
-        'Fan hub listing for Nexus Subnautica mod 1: InternetsLIVE H2.0 Vibrant Shader DX11 (SweetFX installer, F10 toggle). Not affiliated with Nexus Mods or Unknown Worlds.',
+        'Fan site listing for Nexus Subnautica mod 1: InternetsLIVE H2.0 Vibrant Shader DX11 (SweetFX installer, F10 toggle). Not affiliated with Nexus Mods or Unknown Worlds.',
       keywords:
         'Subnautica mod, Nexus Mods, mod 1, InternetsLIVE, Vibrant Shader, SweetFX, DX11, Reshade-style, graphics, InternetsLuitjens',
     },
@@ -120,7 +120,7 @@ export default [
 <h2>Dependencies (read before Download)</h2>
 <p>
   The Nexus <strong>Requirements</strong> table names <strong>QModManager</strong> and <strong>SMLHelper (Modding Helper)</strong>
-  as prerequisites. Install those in the order their authors document, then add this mod’s package. This hub does not paste
+  as prerequisites. Install those in the order their authors document, then add this mod’s package. This listing does not paste
   installer URLs in prose—use <strong>Download</strong> on the right, then follow the Files tab instructions on the store page.
 </p>
 
@@ -293,7 +293,7 @@ export default [
 <h2>Where to get the files</h2>
 <p>
   Use the sidebar <strong>Download</strong> button to open the official Nexus page, then pull the <strong>Custom Load Screen</strong>
-  zip from <strong>Files</strong>. This hub never pastes direct file URLs in prose.
+  zip from <strong>Files</strong>. This listing never pastes direct file URLs in prose.
 </p>
 
 <h2>After install</h2>
@@ -451,7 +451,7 @@ export default [
 <h2>Where to get the files</h2>
 <p>
   Use <strong>Download</strong> on the right to open Nexus, pull the current archive from <strong>Files</strong>, and follow
-  the author’s install order for QMods packages. This hub never pastes direct CDN URLs in prose.
+  the author’s install order for QMods packages. This listing never pastes direct CDN URLs in prose.
 </p>
 
 <h2>After install</h2>

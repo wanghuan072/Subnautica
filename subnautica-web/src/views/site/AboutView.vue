@@ -14,7 +14,7 @@
     <div class="container site-doc__prose article-prose">
       <h2>What subnauticamap.org is</h2>
       <p>
-        subnauticamap.org is an independent, fan-operated reference hub focused on underwater survival titles from
+        subnauticamap.org is an independent, fan-operated reference site focused on underwater survival titles from
         Unknown Worlds Entertainment. Visitors can open full-screen style interactive maps, browse curated guides that
         favour neutral wording over spoilers, and scan mod listings that point to first-party or trusted community
         sources when downloads are involved. The site is designed for readers who want a calmer alternative to ad-heavy
