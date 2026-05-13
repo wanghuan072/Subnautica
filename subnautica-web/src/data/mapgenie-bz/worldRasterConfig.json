@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "id": "mapgenie-below-zero",
+    "title": "Map Genie · Subnautica: Below Zero",
+    "note": "tilesBaseUrl defaults to Map Genie CDN so the bathymetry shows without mirroring; set to /tiles/mapgenie/ after npm run download:mapgenie-bz-tiles for offline. Biome colors come from mapGenieRegionStylesById.json (extracted from mapData.styles.regionStyles). Main raster uses MapLibre defaults (no mainRasterPaint) so JPEG tiles match mapgenie.io."
+  },
+  "tilesBaseUrl": "https://tiles.mapgenie.io/games/",
+  "mainTileSet": {
+    "pattern": "subnautica-below-zero/world/default-v2/{z}/{x}/{y}.jpg",
+    "minZoom": 9,
+    "maxZoom": 15
+  },
+  "initialCenterLngLat": [-0.95179757281239, 0.68387812675922],
+  "initialZoom": 12,
+  "displayResourcePinsOnMap": true,
+  "regionPolygonOverlay": {
+    "note": "Cave-sheet polygons share world mapData but use a different tile sheet; hide fill/line/labels for these titles on the world raster (opacity 0 + label filter).",
+    "excludePolygonTitles": [
+      "Crystal Caves",
+      "Deep Crystal Caves",
+      "Deep Lilypads Caves",
+      "Deep Twisty Bridges",
+      "Fabricator Caverns",
+      "Glacial Basin Underwater"
+    ],
+    "fillOpacity": { "idle": 0.42, "hover": 0.56, "selected": 0.68 },
+    "outlineAccentColor": "#f5a623"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "abandoned_base": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 0,
+    "pixelRatio": 2
+  },
+  "alien_structure": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 88,
+    "pixelRatio": 2
+  },
+  "biome": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 176,
+    "pixelRatio": 2
+  },
+  "cave_entrance": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 264,
+    "pixelRatio": 2
+  },
+  "lifepod": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 352,
+    "pixelRatio": 2
+  },
+  "point_of_interest": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 440,
+    "pixelRatio": 2
+  },
+  "signal": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 528,
+    "pixelRatio": 2
+  },
+  "thermal_activity": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 616,
+    "pixelRatio": 2
+  },
+  "transition": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 704,
+    "pixelRatio": 2
+  },
+  "wreck": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 792,
+    "pixelRatio": 2
+  },
+  "biological_resource": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 880,
+    "pixelRatio": 2
+  },
+  "edible": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 968,
+    "pixelRatio": 2
+  },
+  "resource_deposit": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1056,
+    "pixelRatio": 2
+  },
+  "carnivore": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1144,
+    "pixelRatio": 2
+  },
+  "egg": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1232,
+    "pixelRatio": 2
+  },
+  "flora": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1320,
+    "pixelRatio": 2
+  },
+  "herbivore": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1408,
+    "pixelRatio": 2
+  },
+  "leviathon": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1496,
+    "pixelRatio": 2
+  },
+  "data_box": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1584,
+    "pixelRatio": 2
+  },
+  "electronics": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1672,
+    "pixelRatio": 2
+  },
+  "equipment": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1760,
+    "pixelRatio": 2
+  },
+  "fragment": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1848,
+    "pixelRatio": 2
+  },
+  "material": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 1936,
+    "pixelRatio": 2
+  },
+  "time_capsule": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2024,
+    "pixelRatio": 2
+  },
+  "tool": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2112,
+    "pixelRatio": 2
+  },
+  "upgrade_module": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2200,
+    "pixelRatio": 2
+  },
+  "data_terminal": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2288,
+    "pixelRatio": 2
+  },
+  "pda": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2376,
+    "pixelRatio": 2
+  },
+  "transmission": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2464,
+    "pixelRatio": 2
+  },
+  "easter_egg": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2552,
+    "pixelRatio": 2
+  },
+  "other": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2640,
+    "pixelRatio": 2
+  },
+  "placeholder_2": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2728,
+    "pixelRatio": 2
+  },
+  "placeholder_3": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2816,
+    "pixelRatio": 2
+  },
+  "placeholder_4": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2904,
+    "pixelRatio": 2
+  },
+  "placeholder_5": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 2992,
+    "pixelRatio": 2
+  },
+  "placeholder_6": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 3080,
+    "pixelRatio": 2
+  },
+  "placeholder_7": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 3168,
+    "pixelRatio": 2
+  },
+  "placeholder_8": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 3256,
+    "pixelRatio": 2
+  },
+  "placeholder_9": {
+    "width": 66,
+    "height": 88,
+    "x": 0,
+    "y": 3344,
+    "pixelRatio": 2
+  }
+}

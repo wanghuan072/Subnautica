@@ -1,0 +1,254 @@
+{
+  "gameExtent": {
+    "min": -2048,
+    "max": 2048
+  },
+  "note": "Biome sidebar summaries and thumbnail images are bundled in subnauticamap-vanilla.json (see npm run download:subnautica-wikia); marker details use each marker's detail* fields.",
+  "svgGroups": [
+    {
+      "section": "biome",
+      "id": "safeShallows",
+      "label": "Safe Shallows",
+      "defaultVisible": true,
+      "targets": [
+        "#SafeShallows"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "kelpForest",
+      "label": "Kelp Forest",
+      "defaultVisible": true,
+      "targets": [
+        "#KelpForest"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "grassyPlateaus",
+      "label": "Grassy Plateaus",
+      "defaultVisible": true,
+      "targets": [
+        "#GrassyPlateaus"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "mushroomForest",
+      "label": "Mushroom Forest",
+      "defaultVisible": true,
+      "targets": [
+        "#MushroomForest"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "kooshZone",
+      "label": "Bulb Zone",
+      "defaultVisible": true,
+      "targets": [
+        "#KooshZone"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "crashZone",
+      "label": "Crash Zone",
+      "defaultVisible": true,
+      "targets": [
+        "#CrashZone"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "cragField",
+      "label": "Crag Field",
+      "defaultVisible": true,
+      "targets": [
+        "#CragField"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "grandReef",
+      "label": "Grand Reef",
+      "defaultVisible": true,
+      "targets": [
+        "#GrandReef"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "sparseReef",
+      "label": "Sparse Reef",
+      "defaultVisible": true,
+      "targets": [
+        "#SparseReef"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "seaTreadersPath",
+      "label": "Sea Treader's Path",
+      "defaultVisible": true,
+      "targets": [
+        "#SeaTreadersPath"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "dunes",
+      "label": "Dunes",
+      "defaultVisible": true,
+      "targets": [
+        "#Dunes"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "mountains",
+      "label": "Mountains",
+      "defaultVisible": true,
+      "targets": [
+        "#Mountains"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "bloodKelpZone",
+      "label": "Blood Kelp Zone",
+      "defaultVisible": true,
+      "targets": [
+        "#BloodKelpZone"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "underwaterIslands",
+      "label": "Underwater Islands",
+      "defaultVisible": true,
+      "targets": [
+        "#UnderwaterIslands"
+      ]
+    },
+    {
+      "section": "island",
+      "id": "floatingIsland",
+      "label": "Floating Island",
+      "defaultVisible": false,
+      "targets": [
+        "#FloatingIsland"
+      ]
+    },
+    {
+      "section": "island",
+      "id": "mountainIsland",
+      "label": "Mountain Island",
+      "defaultVisible": false,
+      "targets": [
+        "#MountainIsland"
+      ]
+    },
+    {
+      "section": "cave",
+      "id": "jellyshroom",
+      "label": "Jellyshroom Cave",
+      "defaultVisible": false,
+      "targets": [
+        "#JellyShroomCave"
+      ]
+    },
+    {
+      "section": "cave",
+      "id": "lostRiver",
+      "label": "Lost River",
+      "defaultVisible": false,
+      "targets": [
+        "#LostRiver"
+      ]
+    },
+    {
+      "section": "cave",
+      "id": "inactiveLava",
+      "label": "Inactive Lava Zone",
+      "defaultVisible": false,
+      "targets": [
+        "#InactiveLavaZone"
+      ]
+    },
+    {
+      "section": "cave",
+      "id": "lavaLakes",
+      "label": "Lava Lakes",
+      "defaultVisible": false,
+      "targets": [
+        "#ActiveLavaZone"
+      ]
+    },
+    {
+      "section": "biome",
+      "id": "auroraHull",
+      "label": "Aurora hull area",
+      "defaultVisible": true,
+      "targets": [
+        "#AuroraShip"
+      ]
+    }
+  ],
+  "layers": [
+    {
+      "id": "largeWrecks",
+      "label": "Large wrecks",
+      "color": "#e8b84d",
+      "defaultVisible": true
+    },
+    {
+      "id": "smallWrecks",
+      "label": "Small wrecks",
+      "color": "#d4a03c",
+      "defaultVisible": true
+    },
+    {
+      "id": "degasi",
+      "label": "Degasi bases",
+      "color": "#7cb342",
+      "defaultVisible": true
+    },
+    {
+      "id": "lifepods",
+      "label": "Damaged lifepods",
+      "color": "#6dd4e3",
+      "defaultVisible": true
+    },
+    {
+      "id": "alienBases",
+      "label": "Alien structures",
+      "color": "#b39ddb",
+      "defaultVisible": true
+    },
+    {
+      "id": "caveEntrances",
+      "label": "Cave entrances & deep nodes",
+      "color": "#4db8d9",
+      "defaultVisible": true
+    },
+    {
+      "id": "surfaceCaves",
+      "label": "Cave markers (surface openings)",
+      "color": "#cef6ff",
+      "defaultVisible": true
+    },
+    {
+      "id": "geysers",
+      "label": "Geysers / thermal vents",
+      "color": "#ff8a65",
+      "defaultVisible": false
+    },
+    {
+      "id": "leviathans",
+      "label": "Leviathan spawn points",
+      "color": "#ef5350",
+      "defaultVisible": false
+    }
+  ]
+}

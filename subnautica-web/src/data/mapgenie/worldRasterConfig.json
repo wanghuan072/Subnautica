@@ -1,0 +1,21 @@
+{
+  "_meta": {
+    "id": "mapgenie-world",
+    "title": "Map Genie · Subnautica World",
+    "note": "Raster tiles are served from /tiles/mapgenie/ (mirror via npm run download:mapgenie-tiles). Extract scripts do not modify worldRasterConfig except tilesBaseUrl."
+  },
+  "tilesBaseUrl": "/tiles/mapgenie/",
+  "mainTileSet": {
+    "pattern": "subnautica/world/default-v1/{z}/{x}/{y}.jpg",
+    "minZoom": 9,
+    "maxZoom": 15
+  },
+  "cavesTileSet": {
+    "pattern": "subnautica/world/caves-v1/{z}/{x}/{y}.jpg",
+    "minZoom": 9,
+    "maxZoom": 15
+  },
+  "initialCenterLngLat": [-0.80119546864608, 0.76272315674555],
+  "initialZoom": 12,
+  "displayResourcePinsOnMap": true
+}

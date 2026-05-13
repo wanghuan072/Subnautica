@@ -1,0 +1,57 @@
+{
+  "name": "subnautica-web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "generate-sitemap": "node scripts/generate-sitemap.mjs",
+    "prebuild": "npm run generate-sitemap",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "run-s lint:*",
+    "lint:oxlint": "oxlint . --fix",
+    "lint:eslint": "eslint . --fix --cache",
+    "format": "prettier --write --experimental-cli src/",
+    "extract:mapgenie": "node scripts/extract-mapgenie-locations.mjs",
+    "extract:mapgenie:bz": "node scripts/extract-mapgenie-locations.mjs belowZero",
+    "verify:mapgenie": "node scripts/verify-mapgenie-markers.mjs",
+    "verify:mapgenie:bz": "node scripts/verify-mapgenie-markers.mjs belowZero",
+    "download:mapgenie-media": "node scripts/download-mapgenie-media.mjs",
+    "download:mapgenie-atlas": "node scripts/download-mapgenie-atlas.mjs",
+    "download:mapgenie-tiles": "node scripts/download-mapgenie-tiles.mjs",
+    "download:mapgenie-bz-atlas": "node scripts/download-mapgenie-atlas.mjs --bz",
+    "download:mapgenie-bz-tiles": "node scripts/download-mapgenie-tiles.mjs src/data/mapgenie-bz",
+    "download:mapgenie-bz-media": "node scripts/download-mapgenie-media.mjs src/data/mapgenie-bz/markers.json",
+    "localize:mapgenie-bz-markdown": "node scripts/localize-mapgenie-markdown-links.mjs src/data/mapgenie-bz/markers.json",
+    "localize:offline-bz": "npm run download:mapgenie-bz-atlas && npm run download:mapgenie-bz-media",
+    "localize:mapgenie-markdown": "node scripts/localize-mapgenie-markdown-links.mjs",
+    "download:subnautica-wikia": "node scripts/download-subnautica-wikia-media.mjs",
+    "localize:offline-assets": "npm run download:mapgenie-atlas && npm run download:mapgenie-media && npm run download:subnautica-wikia"
+  },
+  "dependencies": {
+    "@fontsource/noto-sans": "^5.2.8",
+    "@fontsource/oxanium": "^5.2.8",
+    "@panzoom/panzoom": "^4.6.2",
+    "maplibre-gl": "^5.24.0",
+    "vue": "^3.5.32",
+    "vue-router": "^4.6.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-oxlint": "~1.60.0",
+    "eslint-plugin-vue": "~10.8.0",
+    "globals": "^17.5.0",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "~1.60.0",
+    "prettier": "3.8.3",
+    "vite": "^8.0.8",
+    "vite-plugin-vue-devtools": "^8.1.1"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}
