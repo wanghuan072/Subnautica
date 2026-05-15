@@ -157,11 +157,11 @@ const routes = [
     name: 'map-subnautica-2',
     component: () => import('@/views/maps/Subnautica2MapView.vue'),
     meta: {
-      title: 'Subnautica 2 interactive map — atlas status & roadmap',
+      title: 'Subnautica 2 Interactive Map | Early Access Tracker & Status',
       description:
-        'Subnautica 2 map status: when a public dataset can power a browser atlas, what is placeholder today, and how updates will be announced—no fabricated coordinates.',
+        'Track Subnautica 2 map updates for Early Access. Waiting for stable datasets to build a 100% accurate interactive atlas—zero fabricated coordinates. Bookmark now',
       keywords:
-        'Subnautica Map, Subnautica 2 map, Subnautica 2 interactive map, Subnautica 2 atlas, map coming soon, early access map',
+        'Subnautica 2 map, Subnautica 2 interactive atlas, early access tracker, upcoming biomes',
     },
   },
 ]

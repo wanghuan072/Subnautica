@@ -49,35 +49,47 @@
               </ul>
               <p class="gh-rich-foot">
                 New to the planet? Many players still begin with <RouterLink to="/subnautica">Subnautica (2018)</RouterLink>
-                for pacing, but it is optional. Atlas:
-                <RouterLink to="/maps/subnautica-below-zero">Below Zero map</RouterLink> · Section index:
+                for pacing, but it is optional. Atlas card:
+                <a href="#hub-map" class="gh-rich-foot__anchor" @click.prevent="scrollToSection('hub-map')"
+                  >Below Zero interactive map</a
+                >
+                · Site index:
                 <RouterLink to="/">home</RouterLink>.
               </p>
             </div>
-            <div class="gh-maprow" role="list" aria-label="Map entry">
-              <RouterLink
-                class="gh-mapslot gh-mapslot--bz"
-                to="/maps/subnautica-below-zero"
-                role="listitem"
-                aria-label="Open Subnautica Below Zero map"
-              >
-                <div class="gh-mapslot__thumb">
-                  <img src="/images/hero-03.avif" alt="" />
-                </div>
-                <div class="gh-mapslot__body">
-                  <h2 class="gh-mapslot__title">Subnautica 2 Interactive map</h2>
-                  <p class="gh-mapslot__desc">Biome layers, pins, and cave sheets for this title.</p>
-                  <span class="gh-mapslot__action">Open map</span>
-                </div>
-              </RouterLink>
-            </div>
             <div class="gh-hero-actions">
+              <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-map')">Map</button>
               <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-guides')">
                 Guides
               </button>
               <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-mods')">Mods</button>
               <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-faq')">FAQ</button>
             </div>
+          </div>
+        </section>
+
+        <section id="hub-map" class="gh-map-block gh-section gh-scroll-target" aria-labelledby="hub-map-h-bz">
+          <div class="gh-head">
+            <p class="gh-eyebrow">Atlas</p>
+            <h2 id="hub-map-h-bz" class="gh-section-title">Interactive map</h2>
+            <p class="gh-section-intro">Open the full-screen Below Zero atlas: ice shelf, underwater biomes, and POI pins.</p>
+          </div>
+          <div class="gh-maprow" role="list" aria-label="Map entry">
+            <RouterLink
+              class="gh-mapslot gh-mapslot--bz"
+              to="/maps/subnautica-below-zero"
+              role="listitem"
+              aria-label="Open Subnautica Below Zero map"
+            >
+              <div class="gh-mapslot__thumb">
+                <img src="/images/hero-03.avif" alt="" />
+              </div>
+              <div class="gh-mapslot__body">
+                <h3 class="gh-mapslot__title">Below Zero interactive map</h3>
+                <p class="gh-mapslot__desc">Biome layers, pins, and cave sheets for this title.</p>
+                <span class="gh-mapslot__action">Open map</span>
+              </div>
+            </RouterLink>
           </div>
         </section>
 
@@ -557,6 +569,17 @@ const hubMods = computed(() => modsForClassify('game2'))
   color: rgba(210, 240, 248, 0.65);
 }
 
+.gh-rich-foot__anchor {
+  color: color-mix(in srgb, var(--accent) 82%, white);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.gh-rich-foot__anchor:hover {
+  color: var(--color-sun);
+}
+
 .gh-split__rich {
   margin: 0 0 0.85em;
   color: rgba(232, 252, 255, 0.85);
@@ -594,10 +617,20 @@ const hubMods = computed(() => modsForClassify('game2'))
     gap: 0.85rem;
     align-items: stretch;
   }
+}
 
-  .gh-hero .gh-maprow {
-    grid-template-columns: 1fr;
-    max-width: 32rem;
+.gh-map-block {
+  padding-block: 2rem 0.25rem;
+}
+
+.gh-map-block .gh-maprow {
+  grid-template-columns: 1fr;
+  max-width: min(36rem, 100%);
+}
+
+@media (min-width: 768px) {
+  .gh-map-block .gh-maprow {
+    max-width: min(40rem, 100%);
   }
 }
 

@@ -2,6 +2,7 @@ import { onMounted, onUnmounted, ref } from 'vue'
 
 const toc = [
   { id: 'hub-overview', label: 'Overview' },
+  { id: 'hub-map', label: 'Interactive map' },
   { id: 'hub-guides', label: 'Guides' },
   { id: 'hub-mods', label: 'Mods' },
   { id: 'hub-multiplayer', label: 'Multiplayer' },
