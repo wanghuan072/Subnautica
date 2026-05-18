@@ -42,20 +42,21 @@
         </RouterLink>
         <RouterLink
           class="app-header__pill"
-          :class="{ 'app-header__pill--active': navKey === 'subnautica-below-zero' }"
-          to="/subnautica-below-zero"
-          @click="menuOpen = false"
-        >
-          Subnautica Below Zero
-        </RouterLink>
-        <RouterLink
-          class="app-header__pill"
           :class="{ 'app-header__pill--active': navKey === 'subnautica-2' }"
           to="/subnautica-2"
           @click="menuOpen = false"
         >
           Subnautica 2
         </RouterLink>
+        <RouterLink
+          class="app-header__pill"
+          :class="{ 'app-header__pill--active': navKey === 'subnautica-below-zero' }"
+          to="/subnautica-below-zero"
+          @click="menuOpen = false"
+        >
+          Subnautica Below Zero
+        </RouterLink>
+        
       </nav>
     </div>
   </header>

@@ -7,14 +7,19 @@ import path from 'node:path'
 import { REPO_ROOT } from './lib/mapgenie-data-paths.mjs'
 
 const BZ = process.argv.includes('--bz')
+const SN2 = process.argv.includes('--sn2')
 
-const REMOTE = BZ
-  ? 'https://cdn.mapgenie.io/images/games/subnautica-below-zero/markers@2x.png'
-  : process.env.MAPGENIE_MARKERS_ATLAS_URL ||
-    'https://cdn.mapgenie.io/images/games/subnautica/markers@2x.png'
-const OUT = BZ
-  ? path.join(REPO_ROOT, 'public/images/mapgenie-bz/markers@2x.png')
-  : path.join(REPO_ROOT, 'public/images/mapgenie/markers@2x.png')
+const REMOTE = SN2
+  ? 'https://cdn.mapgenie.io/images/games/subnautica-2/markers@2x.png'
+  : BZ
+    ? 'https://cdn.mapgenie.io/images/games/subnautica-below-zero/markers@2x.png'
+    : process.env.MAPGENIE_MARKERS_ATLAS_URL ||
+      'https://cdn.mapgenie.io/images/games/subnautica/markers@2x.png'
+const OUT = SN2
+  ? path.join(REPO_ROOT, 'public/images/mapgenie-sn2/markers@2x.png')
+  : BZ
+    ? path.join(REPO_ROOT, 'public/images/mapgenie-bz/markers@2x.png')
+    : path.join(REPO_ROOT, 'public/images/mapgenie/markers@2x.png')
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0'
 
 async function main() {

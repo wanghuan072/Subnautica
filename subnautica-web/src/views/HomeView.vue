@@ -63,16 +63,15 @@
               class="home-mapslot home-mapslot--sn2"
               to="/maps/subnautica-2"
               role="listitem"
-              aria-label="Open the Subnautica 2 map status page"
+              aria-label="Open the Subnautica 2 full-screen interactive map"
             >
               <div class="home-mapslot__thumb">
                 <img src="/images/hero-02.jpg" alt="" />
-                <span class="home-mapslot__badge">Soon</span>
               </div>
               <div class="home-mapslot__body">
                 <h2 class="home-mapslot__title">Subnautica 2 Map</h2>
-                <p class="home-mapslot__desc">Sequel atlas placeholder until public data ships.</p>
-                <span class="home-mapslot__action">Status</span>
+                <p class="home-mapslot__desc">Early access world—Map Genie tiles, biomes, and pins.</p>
+                <span class="home-mapslot__action">Open map</span>
               </div>
             </RouterLink>
 

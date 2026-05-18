@@ -15,6 +15,7 @@
   "displayResourcePinsOnMap": true,
   "regionPolygonOverlay": {
     "note": "Cave-sheet polygons share world mapData but use a different tile sheet; hide fill/line/labels for these titles on the world raster (opacity 0 + label filter).",
+    "defaultMapLayerVisible": false,
     "excludePolygonTitles": [
       "Crystal Caves",
       "Deep Crystal Caves",

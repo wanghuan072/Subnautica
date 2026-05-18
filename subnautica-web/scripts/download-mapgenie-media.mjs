@@ -14,12 +14,14 @@ import { MAPGENIE_MARKERS_JSON, REPO_ROOT } from './lib/mapgenie-data-paths.mjs'
 function resolveMediaPaths() {
   const arg = process.argv[2]
   const markersJson = arg ? path.resolve(REPO_ROOT, arg) : MAPGENIE_MARKERS_JSON
-  const useBz = markersJson.replace(/\\/g, '/').includes('/mapgenie-bz/')
+  const norm = markersJson.replace(/\\/g, '/')
+  const useSn2 = norm.includes('/mapgenie-sn2/')
+  const useBz = norm.includes('/mapgenie-bz/')
   const outDir = path.join(
     REPO_ROOT,
-    useBz ? 'public/images/mapgenie-bz/media' : 'public/images/mapgenie/media',
+    useSn2 ? 'public/images/mapgenie-sn2/media' : useBz ? 'public/images/mapgenie-bz/media' : 'public/images/mapgenie/media',
   )
-  const webPrefix = useBz ? '/images/mapgenie-bz/media/' : '/images/mapgenie/media/'
+  const webPrefix = useSn2 ? '/images/mapgenie-sn2/media/' : useBz ? '/images/mapgenie-bz/media/' : '/images/mapgenie/media/'
   return { markersJson, outDir, webPrefix }
 }
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0'

@@ -1,18 +1,23 @@
 /**
- * Fetch Map Genie page and write src/data/mapgenie/:
+ * Fetch Map Genie page and write src/data/mapgenie | mapgenie-bz | mapgenie-sn2:
  * markers.json (POIs + resources), regions / labels / regionNav GeoJSON.
  *
- * npm run extract:mapgenie · verify:mapgenie · download:mapgenie-media
+ * Locations/regions may be loaded from `GET {origin}/api/v1/maps/{mapData.map.id}/data`
+ * when no longer embedded in `window.mapData` (current mapgenie.io behaviour).
+ *
+ * npm run extract:mapgenie · extract:mapgenie:bz · extract:mapgenie:sn2
  */
 import fs from 'node:fs'
 import path from 'node:path'
 import {
   extractJsonAssignment,
+  extractMarkerSpritePositionsV3,
   fetchMapgeniePageHtml,
   MAPGENIE_BELOW_ZERO_WORLD,
+  MAPGENIE_SUBNAUTICA_2_WORLD,
   MAPGENIE_SUBNAUTICA_WORLD,
 } from './lib/extract-mapgenie-html-json.mjs'
-import { MAPGENIE_BZ_DATA_DIR, MAPGENIE_DATA_DIR } from './lib/mapgenie-data-paths.mjs'
+import { MAPGENIE_BZ_DATA_DIR, MAPGENIE_DATA_DIR, MAPGENIE_SN2_DATA_DIR } from './lib/mapgenie-data-paths.mjs'
 
 const GAMES = {
   subnautica: {
@@ -27,12 +32,122 @@ const GAMES = {
     /** Derived from POI lng/lat + padding */
     gameWorldBounds: null,
   },
+  subnautica2: {
+    pageUrl: MAPGENIE_SUBNAUTICA_2_WORLD,
+    dir: MAPGENIE_SN2_DATA_DIR,
+    gameWorldBounds: null,
+  },
 }
 
 function resolveGameKey() {
   const a = (process.argv[2] || 'subnautica').toLowerCase()
   if (a === 'belowzero' || a === 'bz' || a === 'subnautica-below-zero') return 'belowZero'
+  if (a === 'sn2' || a === 'subnautica2' || a === 'subnautica-2') return 'subnautica2'
   return 'subnautica'
+}
+
+/** Fallback when MARKER_SPRITE_POSITIONS_V3 is missing (do not use for shipped SN2 — run extract against live page). */
+function buildMarkersAtlas2xLayoutFallback(categories) {
+  const icons = new Set(['other'])
+  for (const c of Object.values(categories || {})) {
+    if (c && typeof c.icon === 'string' && c.icon) icons.add(c.icon)
+  }
+  const ordered = [...icons].sort((a, b) => a.localeCompare(b, 'en'))
+  const out = {}
+  let y = 0
+  for (const key of ordered) {
+    out[key] = { width: 66, height: 88, x: 0, y, pixelRatio: 2 }
+    y += 88
+  }
+  return out
+}
+
+function spriteRectArea(r) {
+  if (!r || typeof r.width !== 'number' || typeof r.height !== 'number') return 0
+  return Math.abs(r.width * r.height)
+}
+
+function normalizeSpriteRect(r) {
+  if (!r || typeof r !== 'object') return null
+  const width = Number(r.width)
+  const height = Number(r.height)
+  const x = Number(r.x)
+  const y = Number(r.y)
+  if (![width, height, x, y].every(Number.isFinite)) return null
+  return {
+    width,
+    height,
+    x,
+    y,
+    pixelRatio: Number.isFinite(Number(r.pixelRatio)) ? Number(r.pixelRatio) : 2,
+  }
+}
+
+/**
+ * Official sprite layout: map category id → rect, then collapse by `icon` string (MapLibre symbol uses icon).
+ * When several categories share an icon, keep the largest rect (avoids 50×50 placeholder duplicates).
+ */
+function buildMarkersAtlasFromSpriteV3(categories, spriteByCategoryId) {
+  if (!spriteByCategoryId || typeof spriteByCategoryId !== 'object') return null
+  const byIcon = {}
+  for (const cat of Object.values(categories || {})) {
+    if (!cat || cat.id == null) continue
+    const sid = String(cat.id)
+    const rect = normalizeSpriteRect(spriteByCategoryId[sid])
+    const icon = cat.icon
+    if (typeof icon !== 'string' || !icon || !rect) continue
+    const prev = byIcon[icon]
+    if (!prev || spriteRectArea(rect) > spriteRectArea(prev)) byIcon[icon] = rect
+  }
+  if (!Object.keys(byIcon).length) return null
+  if (!byIcon.other) {
+    byIcon.other = byIcon.point_of_interest || byIcon.lifepod || Object.values(byIcon)[0]
+  }
+  return byIcon
+}
+
+function buildSn2WorldRasterConfig(mapData) {
+  const ts0 = mapData.mapConfig?.tile_sets?.[0] || {}
+  const pattern =
+    typeof ts0.pattern === 'string' && ts0.pattern.trim()
+      ? ts0.pattern.trim()
+      : 'subnautica-2/world/default-v2/{z}/{y}/{x}.jpg'
+  const startLng = Number(mapData.mapConfig?.start_lng)
+  const startLat = Number(mapData.mapConfig?.start_lat)
+  const minZ = Number(ts0.min_zoom)
+  const maxZ = Number(ts0.max_zoom)
+  return {
+    _meta: {
+      id: 'mapgenie-subnautica-2',
+      title: 'Map Genie · Subnautica 2',
+      note:
+        'Tile URL from mapData.mapConfig.tile_sets[0].pattern (Subnautica 2 uses {z}/{y}/{x}). markersAtlas2x.json: rects from page MARKER_SPRITE_POSITIONS_V3. npm run download:mapgenie-sn2-media for pin photos.',
+    },
+    tilesBaseUrl: 'https://tiles.mapgenie.io/games/',
+    tileAttribution: 'Map tiles and location data © Map Genie — https://mapgenie.io',
+    mainTileSet: {
+      pattern,
+      minZoom: Number.isFinite(minZ) && minZ >= 0 ? minZ : 8,
+      maxZoom: Number.isFinite(maxZ) && maxZ >= 0 ? maxZ : 18,
+    },
+    initialCenterLngLat: [
+      Number.isFinite(startLng) ? startLng : -0.7,
+      Number.isFinite(startLat) ? startLat : 0.7,
+    ],
+    initialZoom:
+      Number.isFinite(Number(mapData.mapConfig?.initial_zoom)) && Number(mapData.mapConfig.initial_zoom) >= 1
+        ? Number(mapData.mapConfig.initial_zoom)
+        : 12,
+    displayResourcePinsOnMap: true,
+    /** Match mapgenie.io sidebar: dense resource/fauna/flora pins off until the user enables them. */
+    defaultHiddenPoiGroupTitles: ['Resources', 'Wildlife', 'Plants'],
+    regionPolygonOverlay: {
+      /** Matches mapData.styles.mapStyle.showRegionPolygons (false on mapgenie.io for SN2). */
+      defaultMapLayerVisible: mapData.styles?.mapStyle?.showRegionPolygons === true,
+      fillOpacity: { idle: 0.42, hover: 0.56, selected: 0.68 },
+      outlineAccentColor: '#f5a623',
+    },
+  }
 }
 
 function computeBoundsFromMapLocations(locations) {
@@ -406,14 +521,72 @@ function buildResourceMarkers(specialData, regionById) {
   return out
 }
 
+const MAPGENIE_DATA_API_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0'
+
+/**
+ * Map Genie no longer embeds `locations` / `regions` (and sometimes `styles.regionStyles`) in `window.mapData`.
+ * They are served from `GET /api/v1/maps/{mapId}/data` on the same origin as the map page.
+ */
+async function enrichMapDataFromMapDataApi(mapData, pageUrl) {
+  const mapId = mapData?.map?.id
+  if (mapId == null || !Number.isFinite(Number(mapId))) return mapData
+
+  const locs = mapData.locations
+  const regs = mapData.regions
+  const needLoc = !Array.isArray(locs) || locs.length === 0
+  const needReg = !Array.isArray(regs) || regs.length === 0
+
+  const styles = mapData.styles
+  const hasRegionStyles =
+    styles &&
+    typeof styles === 'object' &&
+    styles.regionStyles &&
+    typeof styles.regionStyles === 'object' &&
+    Object.keys(styles.regionStyles).length > 0
+
+  if (!needLoc && !needReg && hasRegionStyles) return mapData
+
+  let origin
+  try {
+    origin = new URL(pageUrl).origin
+  } catch {
+    return mapData
+  }
+  const url = `${origin}/api/v1/maps/${mapId}/data`
+  const res = await fetch(url, {
+    headers: { Accept: 'application/json', 'User-Agent': MAPGENIE_DATA_API_UA },
+  })
+  if (!res.ok) {
+    throw new Error(`Map data API HTTP ${res.status} for ${url} (expected locations/regions JSON)`)
+  }
+  const data = await res.json()
+
+  const out = { ...mapData }
+  if (needLoc && Array.isArray(data.locations) && data.locations.length) {
+    out.locations = data.locations
+  }
+  if (needReg && Array.isArray(data.regions) && data.regions.length) {
+    out.regions = data.regions
+  }
+  if (!hasRegionStyles && data.styles && typeof data.styles === 'object') {
+    out.styles = data.styles
+  }
+  return out
+}
+
 async function run() {
   const gameKey = resolveGameKey()
   const cfg = GAMES[gameKey]
-  if (!cfg) throw new Error(`Unknown game key: ${gameKey}. Use subnautica | belowZero`)
+  if (!cfg) throw new Error(`Unknown game key: ${gameKey}. Use subnautica | belowZero | subnautica2`)
 
   const html = await fetchMapgeniePageHtml(cfg.pageUrl)
-  const j = JSON.parse(extractJsonAssignment(html, 'window.mapData = '))
-  const special = JSON.parse(extractJsonAssignment(html, 'window.specialData = '))
+  let j = JSON.parse(extractJsonAssignment(html, 'window.mapData = '))
+  j = await enrichMapDataFromMapDataApi(j, cfg.pageUrl)
+  if (!Array.isArray(j.locations) || j.locations.length === 0) {
+    throw new Error('No locations in mapData after HTML + /api/v1/maps/{id}/data merge.')
+  }
+  const specialRaw = JSON.parse(extractJsonAssignment(html, 'window.specialData = '))
+  const special = Array.isArray(specialRaw) ? {} : specialRaw && typeof specialRaw === 'object' ? specialRaw : {}
 
   const locations = j.locations ?? []
   activeGameBounds = cfg.gameWorldBounds ? { ...cfg.gameWorldBounds } : computeBoundsFromMapLocations(locations)
@@ -424,6 +597,7 @@ async function run() {
   const OUT_LABELS = path.join(DIR, 'mapGenieRegionLabels.json')
   const OUT_REGION_NAV = path.join(DIR, 'mapGenieRegionNav.json')
   const OUT_REGION_STYLES = path.join(DIR, 'mapGenieRegionStylesById.json')
+  const OUT_GROUPS = path.join(DIR, 'mapGenieGroups.json')
 
   console.log('Game:', gameKey, '→', DIR)
   console.log('Active lng/lat bounds:', activeGameBounds)
@@ -483,6 +657,7 @@ async function run() {
       categoryTitle: typeof cat?.title === 'string' ? cat.title : '',
       groupId: gid != null && gid !== '' ? gid : null,
       groupTitle: typeof grp?.title === 'string' ? grp.title : '',
+      groupColor: typeof grp?.color === 'string' ? String(grp.color).replace(/^#/, '').trim() : '',
       regionId,
       id: loc.id,
       name: title,
@@ -579,9 +754,26 @@ async function run() {
 
   fs.mkdirSync(DIR, { recursive: true })
   fs.writeFileSync(OUT_MARKERS, `${JSON.stringify(allMarkers)}\n`, 'utf8')
+  fs.writeFileSync(OUT_GROUPS, `${JSON.stringify(Array.isArray(groupsList) ? groupsList : [])}\n`, 'utf8')
+  console.log('Wrote map groups:', Array.isArray(groupsList) ? groupsList.length : 0, OUT_GROUPS)
   if (gameKey === 'belowZero') {
     fs.writeFileSync(OUT_REGION_STYLES, `${JSON.stringify(regionStylesById)}\n`, 'utf8')
     console.log('Wrote region styles by id:', Object.keys(regionStylesById).length, OUT_REGION_STYLES)
+  } else if (gameKey === 'subnautica2') {
+    fs.writeFileSync(OUT_REGION_STYLES, '{}\n', 'utf8')
+    console.log('Wrote empty region styles (SN2 uses title-based biome colors):', OUT_REGION_STYLES)
+    const OUT_ATLAS = path.join(DIR, 'markersAtlas2x.json')
+    const spriteV3 = extractMarkerSpritePositionsV3(html)
+    const atlasMerged = buildMarkersAtlasFromSpriteV3(categories, spriteV3)
+    const atlasFinal = atlasMerged || buildMarkersAtlas2xLayoutFallback(categories)
+    if (!atlasMerged) {
+      console.warn('MARKER_SPRITE_POSITIONS_V3 not parsed — wrote fallback atlas; pins will not match Map Genie.')
+    }
+    fs.writeFileSync(OUT_ATLAS, `${JSON.stringify(atlasFinal)}\n`, 'utf8')
+    const OUT_WORLD = path.join(DIR, 'worldRasterConfig.json')
+    fs.writeFileSync(OUT_WORLD, `${JSON.stringify(buildSn2WorldRasterConfig(j))}\n`, 'utf8')
+    console.log('Wrote', OUT_ATLAS)
+    console.log('Wrote', OUT_WORLD)
   }
   fs.writeFileSync(
     OUT_REG,

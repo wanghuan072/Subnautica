@@ -87,11 +87,11 @@ const routes = [
     name: 'subnautica-2',
     component: () => import('@/views/Subnautica2GuideView.vue'),
     meta: {
-      title: 'Subnautica 2 — early access guides, co-op & mod list',
+      title: 'Subnautica 2 — early access guides, co-op, mods & interactive map',
       description:
-        'Subnautica 2 early-access guides for co-op and survival, curated mod picks, PC targets, FAQ, and the interactive map roadmap when public data is available.',
+        'Subnautica 2 early-access guides for co-op and survival, curated mod picks, PC targets, FAQ, and a full-screen interactive map powered by Map Genie data.',
       keywords:
-        'Subnautica Map, Subnautica 2 guide, Subnautica 2 early access, Subnautica 2 co-op, Subnautica 2 mods, Subnautica 2 map status',
+        'Subnautica Map, Subnautica 2 guide, Subnautica 2 early access, Subnautica 2 co-op, Subnautica 2 mods, Subnautica 2 interactive map',
     },
   },
   {
@@ -157,11 +157,12 @@ const routes = [
     name: 'map-subnautica-2',
     component: () => import('@/views/maps/Subnautica2MapView.vue'),
     meta: {
-      title: 'Subnautica 2 Interactive Map | Early Access Tracker & Status',
+      title: 'Subnautica 2 interactive map — full-screen atlas (Map Genie data)',
+      layout: 'map',
       description:
-        'Track Subnautica 2 map updates for Early Access. Waiting for stable datasets to build a 100% accurate interactive atlas—zero fabricated coordinates. Bookmark now',
+        'Full-screen Subnautica 2 browser map: Map Genie world tiles, biome polygons, POI and resource pins—pan and zoom with MapLibre.',
       keywords:
-        'Subnautica 2 map, Subnautica 2 interactive atlas, early access tracker, upcoming biomes',
+        'Subnautica 2 map, Subnautica 2 interactive map, Subnautica 2 biome map, Map Genie, full screen map',
     },
   },
 ]

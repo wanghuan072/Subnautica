@@ -82,7 +82,7 @@
           <div class="gh-head">
             <p class="gh-eyebrow">Atlas</p>
             <h2 id="hub-map-h-sn2" class="gh-section-title">Interactive map</h2>
-            <p class="gh-section-intro">Check atlas status, then open the full-screen viewer when you are ready to browse.</p>
+            <p class="gh-section-intro">Open the full-screen Map Genie–based atlas: biomes, pins, and search—same tools as the other titles.</p>
           </div>
           <div class="gh-maprow" role="list" aria-label="Map entry">
             <RouterLink
@@ -96,7 +96,7 @@
               </div>
               <div class="gh-mapslot__body">
                 <h3 class="gh-mapslot__title">Subnautica 2 interactive map</h3>
-                <p class="gh-mapslot__desc">Status page and future full-screen atlas for this title.</p>
+                <p class="gh-mapslot__desc">MapLibre viewer with live Map Genie world data, markers, and categories.</p>
                 <span class="gh-mapslot__action">Open map</span>
               </div>
             </RouterLink>
@@ -261,8 +261,9 @@
               <h3 class="gh-faq-row__q">Where is the interactive map?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  Visit <RouterLink to="/maps/subnautica-2">Subnautica 2 map</RouterLink> for the current atlas status. Live
-                  datasets for the first two games sit on <RouterLink to="/maps/subnautica">Subnautica</RouterLink> and
+                  Open the <RouterLink to="/maps/subnautica-2">Subnautica 2 interactive map</RouterLink> for the full-screen
+                  atlas (Map Genie tiles and locations). The original games use
+                  <RouterLink to="/maps/subnautica">Subnautica</RouterLink> and
                   <RouterLink to="/maps/subnautica-below-zero">Below Zero</RouterLink> routes.
                 </p>
               </div>

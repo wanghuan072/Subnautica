@@ -1,10 +1,14 @@
 <script setup>
 import maplibregl from 'maplibre-gl'
 import 'maplibre-gl/dist/maplibre-gl.css'
-import { computed, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { mapIconImageIdFromKey, registerMapLibrePinImages, resolveMapIconGroupKey } from '../data/mapIcon.js'
 
 const props = defineProps({
-  /** Map Genie bundle from `src/data/mapgenie` or `src/data/mapgenie-bz` */
+  /**
+   * Map Genie bundle from `src/data/mapgenie`, `mapgenie-bz`, or `mapgenie-sn2`.
+   * 设置 `useCustomMapIcons: true` 时使用 `src/data/mapIcon.js` 的 SVG 钉，不依赖 atlas 雪碧图。
+   */
   dataset: { type: Object, required: true },
 })
 
@@ -24,6 +28,13 @@ const regionStylesById = computed(() => {
   const x = props.dataset.regionStylesById
   return x && typeof x === 'object' && !Array.isArray(x) ? x : {}
 })
+
+const hasRegionFeatures = computed(() => (regionsGeo.value.features?.length ?? 0) > 0)
+
+/** When false, matches Map Genie default (`mapData.styles.mapStyle.showRegionPolygons`). */
+const regionMapLayersVisible = ref(
+  worldRasterConfig.value.regionPolygonOverlay?.defaultMapLayerVisible !== false,
+)
 
 function hasOfficialRegionStyles() {
   return Object.keys(regionStylesById.value).length > 0
@@ -290,39 +301,123 @@ function toggleSidebarFold(key) {
   sidebarFold[key] = !sidebarFold[key]
 }
 
+function walkGeoJsonCoords(coords, visit) {
+  if (!coords) return
+  if (typeof coords[0] === 'number' && typeof coords[1] === 'number') {
+    visit(coords[0], coords[1])
+    return
+  }
+  if (Array.isArray(coords)) {
+    for (const c of coords) walkGeoJsonCoords(c, visit)
+  }
+}
+
 /**
- * Playable area from tiles + on-map pins; when resources are not on the map, bounds use POI coords only.
+ * 可拖动范围：标点 + biome 多边形并集，再按配置加边距（避免仅靠标点框得过紧、缩小时看不到全貌）。
  */
 const mapMaxBoundsLngLat = computed(() => {
   let minLng = Infinity
   let maxLng = -Infinity
   let minLat = Infinity
   let maxLat = -Infinity
-  for (const m of markersData.value) {
-    if (m.mapGenieSource === 'resource' && worldRasterConfig.value.displayResourcePinsOnMap !== true) continue
-    const lng = Number(m.lng)
-    const lat = Number(m.lat)
-    if (!Number.isFinite(lng) || !Number.isFinite(lat)) continue
+  /** @param {number} lng @param {number} lat */
+  function visit(lng, lat) {
+    if (!Number.isFinite(lng) || !Number.isFinite(lat)) return
+    if (Math.abs(lng) > 180 || Math.abs(lat) > 90) return
     minLng = Math.min(minLng, lng)
     maxLng = Math.max(maxLng, lng)
     minLat = Math.min(minLat, lat)
     maxLat = Math.max(maxLat, lat)
   }
+  for (const m of markersData.value) {
+    if (m.mapGenieSource === 'resource' && worldRasterConfig.value.displayResourcePinsOnMap !== true) continue
+    visit(Number(m.lng), Number(m.lat))
+  }
+  for (const f of regionsGeo.value?.features ?? []) {
+    walkGeoJsonCoords(f?.geometry?.coordinates, visit)
+  }
   if (!Number.isFinite(minLng) || minLng === Infinity) return null
-  const padLng = (maxLng - minLng) * 0.1
-  const padLat = (maxLat - minLat) * 0.1
+  const cfg = worldRasterConfig.value
+  const spanLng = maxLng - minLng
+  const spanLat = maxLat - minLat
+  const pr =
+    typeof cfg.mapMaxBoundsPaddingRatio === 'number' &&
+    Number.isFinite(cfg.mapMaxBoundsPaddingRatio) &&
+    cfg.mapMaxBoundsPaddingRatio >= 0
+      ? cfg.mapMaxBoundsPaddingRatio
+      : 0.22
+  const minPad =
+    typeof cfg.mapMaxBoundsMinPadDegrees === 'number' && Number.isFinite(cfg.mapMaxBoundsMinPadDegrees)
+      ? cfg.mapMaxBoundsMinPadDegrees
+      : 0.02
+  const padLng = Math.max(spanLng * pr, minPad)
+  const padLat = Math.max(spanLat * pr, minPad)
   return /** @type {[[number, number], [number, number]]} */ ([
     [minLng - padLng, minLat - padLat],
     [maxLng + padLng, maxLat + padLat],
   ])
 })
 
-/** Group titles match bundled Map Genie data; Raw Materials / Biological only list icons with POI pins */
-const MAP_GENIE_GROUP_ORDER = ['Locations', 'Raw Materials', 'Biological', 'Tech', 'Communications', 'Other']
+/** Legacy sidebar when `dataset.mapGenieGroups` is absent (order aligned with mapgenie.io SN2). */
+const MAP_GENIE_GROUP_ORDER = [
+  'Locations',
+  'Biological',
+  'Tech',
+  'Communications',
+  'Resources',
+  'Wildlife',
+  'Plants',
+  'Raw Materials',
+  'Other',
+]
 
 function poiSidebarGroupTitle(m) {
   const g = typeof m.groupTitle === 'string' ? m.groupTitle.trim() : ''
   return g || 'Other'
+}
+
+/** MapLibre `icon-image`：自定义钉 id 或 Map Genie 雪碧图 key */
+function mapLayerIconForMarker(m) {
+  if (props.dataset.useCustomMapIcons === true) {
+    const key = resolveMapIconGroupKey(poiSidebarGroupTitle(m), m.mapGenieSource)
+    return mapIconImageIdFromKey(key)
+  }
+  return typeof m.icon === 'string' && m.icon ? m.icon : 'other'
+}
+
+/** When set on `worldRasterConfig`, categories under these **group** titles start unchecked on the map (case-insensitive). */
+function defaultHiddenPoiGroupTitlesSet() {
+  const raw = worldRasterConfig.value.defaultHiddenPoiGroupTitles
+  if (!Array.isArray(raw)) return new Set()
+  return new Set(raw.filter((x) => typeof x === 'string' && x.trim()).map((x) => x.trim().toLowerCase()))
+}
+
+/** Stable key for map filter + sidebar: POI by Map Genie `category_id`, synthetic resources by kind+entry, else sprite icon. */
+function markerVisibilityKey(m) {
+  if (!m || typeof m !== 'object') return 'i:other'
+  if (m.mapGenieSource === 'resource') {
+    const rk = m.resourceKind
+    const reid = m.resourceEntryId
+    if (rk != null && reid != null) return `r:${rk}:${reid}`
+    const ic = typeof m.icon === 'string' && m.icon ? m.icon : 'other'
+    return `i:${ic}`
+  }
+  const cid = m.categoryId
+  if (cid != null && cid !== '' && Number.isFinite(Number(cid))) return `c:${Number(cid)}`
+  const ic = typeof m.icon === 'string' && m.icon ? m.icon : 'other'
+  return `i:${ic}`
+}
+
+function markerLayerDefaultVisible(visibilityKey) {
+  const hideGroups = defaultHiddenPoiGroupTitlesSet()
+  if (hideGroups.size === 0) return true
+  let seen = false
+  for (const m of markersOnMapOnly.value) {
+    if (markerVisibilityKey(m) !== visibilityKey) continue
+    seen = true
+    if (!hideGroups.has(poiSidebarGroupTitle(m).toLowerCase())) return true
+  }
+  return !seen
 }
 
 /** Legacy rows without groupTitle: fall back to resourceKind */
@@ -402,16 +497,26 @@ function buildMarkerFeatureProperties(m, regionTitleById) {
   if (typeof rid === 'number' && Number.isFinite(rid)) {
     regionTitle = regionTitleById.get(rid) ?? ''
   }
+  const mediaBase = Array.isArray(m.media) ? m.media : []
+  const detailImage = typeof m.detailImage === 'string' ? m.detailImage.trim() : ''
+  const media =
+    detailImage && !mediaBase.some((x) => x && x.url === detailImage)
+      ? [{ url: detailImage, title: name, type: 'image' }, ...mediaBase]
+      : mediaBase
+  const visibilityKey = markerVisibilityKey(m)
   return {
     id: m.id,
     title: name,
-    icon: typeof m.icon === 'string' ? m.icon : 'other',
+    icon: mapLayerIconForMarker(m),
+    visibilityKey,
     categoryId: m.categoryId != null ? m.categoryId : '',
     categoryTitle: typeof m.categoryTitle === 'string' ? m.categoryTitle : '',
+    groupTitle: typeof m.groupTitle === 'string' ? m.groupTitle : '',
+    groupColor: typeof m.groupColor === 'string' ? m.groupColor : '',
     regionTitle,
     summary: typeof m.detailSummary === 'string' ? m.detailSummary : '',
     description: typeof m.detailDescription === 'string' ? m.detailDescription : '',
-    media: Array.isArray(m.media) ? m.media : [],
+    media,
     mapGenieSource: m.mapGenieSource === 'resource' ? 'resource' : 'poi',
   }
 }
@@ -437,6 +542,68 @@ const markersOnMapOnly = computed(() => {
   return markersData.value.filter((m) => m.mapGenieSource !== 'resource')
 })
 
+/** Nested groups from extract (`mapGenieGroups.json`) — same structure as mapgenie.io sidebar. */
+const mapGenieGroupsRaw = computed(() => {
+  const g = props.dataset.mapGenieGroups
+  return Array.isArray(g) && g.length ? g : null
+})
+
+const useMapGenieGroupedSidebar = computed(() => mapGenieGroupsRaw.value != null)
+
+const categoryIdOnMapCount = computed(() => {
+  const m = new Map()
+  for (const x of markersOnMapOnly.value) {
+    if (x.mapGenieSource === 'resource') continue
+    const id = x.categoryId
+    if (id == null || !Number.isFinite(Number(id))) continue
+    const n = Number(id)
+    m.set(n, (m.get(n) ?? 0) + 1)
+  }
+  return m
+})
+
+const markerFilterSidebarFromApi = computed(() => {
+  const list = mapGenieGroupsRaw.value
+  if (!list) return null
+  const counts = categoryIdOnMapCount.value
+  const sortedGroups = [...list].sort((a, b) => {
+    const oa = Number(a.order ?? 0)
+    const ob = Number(b.order ?? 0)
+    if (oa !== ob) return oa - ob
+    return Number(a.id ?? 0) - Number(b.id ?? 0)
+  })
+  return sortedGroups
+    .map((g) => {
+      const cats = Array.isArray(g.categories) ? g.categories : []
+      const rows = cats
+        .map((c) => {
+          const id = Number(c.id)
+          if (!Number.isFinite(id)) return null
+          const visibilityKey = `c:${id}`
+          const cnt = counts.get(id) ?? 0
+          if (cnt <= 0) return null
+          return {
+            categoryId: id,
+            title: typeof c.title === 'string' ? c.title : '',
+            icon: typeof c.icon === 'string' ? c.icon : 'other',
+            visibilityKey,
+            count: cnt,
+          }
+        })
+        .filter(Boolean)
+        .sort((a, b) => String(a.title).localeCompare(String(b.title), 'en'))
+      return {
+        id: g.id,
+        title: typeof g.title === 'string' ? g.title : '',
+        color: typeof g.color === 'string' ? g.color : '',
+        categories: rows,
+      }
+    })
+    .filter((g) => g.categories.length > 0)
+})
+
+const showPoiListFold = computed(() => !useMapGenieGroupedSidebar.value)
+
 const resourceMarkersCount = computed(() => markersData.value.filter((m) => m.mapGenieSource === 'resource').length)
 
 const regionIdToTitle = computed(() => {
@@ -454,51 +621,62 @@ const regionIdToTitle = computed(() => {
 const locationsGeo = computed(() => mapgenieMarkersToFeatureCollection(markersOnMapOnly.value, regionIdToTitle.value))
 const locationFeatures = computed(() => locationsGeo.value.features ?? [])
 
-/** Icon keys used on the map (excludes biological_resource etc. used only in Resources) */
-const iconKeysList = computed(() => {
+/** Layer visibility keys on the map (category / resource entry / icon fallback). */
+const markerVisibilityKeysList = computed(() => {
   const s = new Set()
   for (const f of locationFeatures.value) {
-    const i = f.properties?.icon
-    if (typeof i === 'string') s.add(i)
+    const k = f.properties?.visibilityKey
+    if (typeof k === 'string' && k) s.add(k)
   }
-  return [...s].sort()
+  return [...s].sort((a, b) => a.localeCompare(b, 'en'))
 })
 
-/** Category visibility → symbol layer filter */
-const iconVisible = reactive(/** @type {Record<string, boolean>} */ {})
+/** Per–visibility-key toggles → symbol layer filter */
+const markerLayerVisible = reactive(/** @type {Record<string, boolean>} */ {})
 
 watch(
-  iconKeysList,
-  (keys) => {
+  [markerVisibilityKeysList, () => worldRasterConfig.value.defaultHiddenPoiGroupTitles],
+  ([keys]) => {
+    for (const k of Object.keys(markerLayerVisible)) {
+      if (!keys.includes(k)) delete markerLayerVisible[k]
+    }
     for (const k of keys) {
-      if (iconVisible[k] === undefined) iconVisible[k] = true
+      if (markerLayerVisible[k] === undefined) markerLayerVisible[k] = markerLayerDefaultVisible(k)
     }
   },
-  { immediate: true },
+  { immediate: true, deep: true },
 )
 
-const iconCounts = computed(() => {
-  const m = Object.create(null)
-  for (const f of locationFeatures.value) {
-    const i = f.properties?.icon
-    if (typeof i !== 'string') continue
-    m[i] = (m[i] || 0) + 1
-  }
-  return m
-})
-
-/** Categories: groups that actually have on-map POIs */
+/** Categories: Map Genie sidebar groups → rows (one chip per category / resource type, not per sprite icon). */
 const sidebarCategoryGroups = computed(() => {
   const rows = []
   for (const groupTitle of MAP_GENIE_GROUP_ORDER) {
-    const iconSet = new Set()
+    const byKey = new Map()
     for (const m of markersOnMapOnly.value) {
       if (poiSidebarGroupTitle(m) !== groupTitle) continue
-      if (typeof m.icon === 'string') iconSet.add(m.icon)
+      const vk = markerVisibilityKey(m)
+      if (!byKey.has(vk)) {
+        let label = ''
+        if (m.mapGenieSource === 'resource') {
+          label = typeof m.name === 'string' && m.name.trim() ? m.name.trim() : vk
+        } else {
+          label =
+            typeof m.categoryTitle === 'string' && m.categoryTitle.trim()
+              ? m.categoryTitle.trim()
+              : formatIconLabel(String(m.icon ?? ''))
+        }
+        byKey.set(vk, {
+          visibilityKey: vk,
+          label,
+          icon: typeof m.icon === 'string' ? m.icon : 'other',
+          count: 0,
+        })
+      }
+      byKey.get(vk).count++
     }
-    const icons = [...iconSet].sort((a, b) => a.localeCompare(b, 'en'))
-    if (!icons.length) continue
-    rows.push({ groupTitle, icons })
+    const items = [...byKey.values()].sort((a, b) => a.label.localeCompare(b.label, 'en'))
+    if (!items.length) continue
+    rows.push({ groupTitle, items })
   }
   return rows
 })
@@ -508,7 +686,8 @@ const filteredLocations = computed(() => {
   return locationFeatures.value.filter((f) => {
     const p = f.properties
     if (!p) return false
-    if (iconVisible[p.icon] === false) return false
+    const vk = typeof p.visibilityKey === 'string' ? p.visibilityKey : ''
+    if (vk && markerLayerVisible[vk] === false) return false
     if (!q) return true
     const title = String(p.title ?? '').toLowerCase()
     const cat = String(p.categoryTitle ?? '').toLowerCase()
@@ -653,22 +832,67 @@ function formatIconLabel(icon) {
     .replace(/\b\w/g, (ch) => ch.toUpperCase())
 }
 
-function applyLocationIconFilter() {
+function formatMgHeading(title) {
+  return String(title ?? '')
+    .trim()
+    .toUpperCase()
+}
+
+/** Map Genie group hex (no `#`) → swatch for sidebar headings. */
+function mapGroupDotStyle(hex) {
+  const h = String(hex ?? '')
+    .replace(/^#/, '')
+    .trim()
+  if (!/^[0-9A-Fa-f]{6}$/.test(h)) return {}
+  return { backgroundColor: `#${h}` }
+}
+
+function applyLocationVisibilityFilter() {
   if (!map?.getLayer?.('mg-locations-symbols')) return
-  const mapIcons = [
-    ...new Set(locationFeatures.value.map((f) => f.properties?.icon).filter((x) => typeof x === 'string')),
+  const keys = [
+    ...new Set(
+      locationFeatures.value.map((f) => f.properties?.visibilityKey).filter((x) => typeof x === 'string' && x),
+    ),
   ]
-  const allowed = mapIcons.filter((k) => iconVisible[k] !== false)
+  const allowed = keys.filter((k) => markerLayerVisible[k] !== false)
   if (allowed.length === 0) {
     map.setFilter('mg-locations-symbols', ['boolean', false])
-  } else if (allowed.length === mapIcons.length && mapIcons.every((k) => iconVisible[k] !== false)) {
+  } else if (allowed.length === keys.length && keys.every((k) => markerLayerVisible[k] !== false)) {
     map.setFilter('mg-locations-symbols', null)
   } else {
-    map.setFilter('mg-locations-symbols', ['in', ['get', 'icon'], ['literal', allowed]])
+    map.setFilter('mg-locations-symbols', ['in', ['get', 'visibilityKey'], ['literal', allowed]])
   }
 }
 
-watch(iconVisible, () => applyLocationIconFilter(), { deep: true })
+watch(markerLayerVisible, () => applyLocationVisibilityFilter(), { deep: true })
+
+watch(
+  locationsGeo,
+  () => {
+    const src = map?.getSource?.('mg-locations')
+    if (!src || typeof src.setData !== 'function') return
+    try {
+      src.setData(locationsGeo.value)
+    } catch {
+      /* */
+    }
+    void ensureAllMarkerImagesLoaded().then(() => applyLocationVisibilityFilter())
+  },
+)
+
+watch(
+  () => ({ ...sidebarFold }),
+  () => {
+    nextTick(() => {
+      try {
+        map?.resize()
+      } catch {
+        /* */
+      }
+    })
+  },
+  { deep: true },
+)
 
 function flyToLngLat(lng, lat, zoom) {
   map?.flyTo({
@@ -783,13 +1007,77 @@ function focusRegionById(regionId) {
 }
 
 function setAllCategoriesVisible(visible) {
-  for (const k of iconKeysList.value) {
-    iconVisible[k] = visible
+  for (const k of markerVisibilityKeysList.value) {
+    markerLayerVisible[k] = visible
+  }
+}
+
+/** 仅切换某一 Map Genie 分组下的分类（LOCATIONS / TECH 等块内） */
+function setMarkerGroupCategoriesVisible(grp, visible) {
+  const cats = grp?.categories
+  if (!Array.isArray(cats)) return
+  for (const cat of cats) {
+    const k = cat?.visibilityKey
+    if (typeof k === 'string' && k) markerLayerVisible[k] = visible
+  }
+}
+
+/** Legacy 侧栏：单个折叠组内的 chip */
+function setLegacyCategoryGroupVisible(grp, visible) {
+  const items = grp?.items
+  if (!Array.isArray(items)) return
+  for (const item of items) {
+    const k = item?.visibilityKey
+    if (typeof k === 'string' && k) markerLayerVisible[k] = visible
+  }
+}
+
+function setAllBiomesLayersVisible(visible) {
+  regionMapLayersVisible.value = !!visible
+}
+
+const resourcePanelOpen = reactive({})
+
+watch(
+  () => resourceSidebarPanels.value.map((p) => p.groupTitle).join('\0'),
+  () => {
+    const panels = resourceSidebarPanels.value
+    for (const k of Object.keys(resourcePanelOpen)) {
+      delete resourcePanelOpen[k]
+    }
+    for (let i = 0; i < panels.length; i++) {
+      const t = panels[i]?.groupTitle
+      if (typeof t === 'string' && t) resourcePanelOpen[t] = i === 0
+    }
+  },
+  { immediate: true },
+)
+
+/** 受控展开：避免与 v-for 的 :open 冲突 */
+function onResourcePanelToggle(e, groupTitle) {
+  e.preventDefault()
+  const g = String(groupTitle)
+  resourcePanelOpen[g] = !resourcePanelOpen[g]
+}
+
+function setAllResourcePanelsExpanded(expanded) {
+  for (const p of resourceSidebarPanels.value) {
+    const t = p?.groupTitle
+    if (typeof t === 'string' && t) resourcePanelOpen[t] = expanded
   }
 }
 
 function tileUrl(pattern) {
   return `${worldRasterConfig.value.tilesBaseUrl}${pattern}`
+}
+
+/** Raster source attribution (Map Genie CDN vs self-hosted tiles). */
+function rasterTilesAttribution() {
+  const cfg = worldRasterConfig.value
+  if (typeof cfg.tileAttribution === 'string' && cfg.tileAttribution.trim()) return cfg.tileAttribution.trim()
+  const base = cfg.tilesBaseUrl || ''
+  if (typeof base === 'string' && base.includes('mapgenie')) return '© Map Genie — mapgenie.io'
+  return 'Local raster tiles'
 }
 
 const hasCavesLayer = computed(() => !!worldRasterConfig.value.cavesTileSet)
@@ -828,7 +1116,7 @@ function buildStyle() {
       tileSize: 256,
       minzoom: main.minZoom,
       maxzoom: main.maxZoom,
-      attribution: 'Local raster tiles',
+      attribution: rasterTilesAttribution(),
     },
   }
   const layers = [
@@ -851,6 +1139,7 @@ function buildStyle() {
       tileSize: 256,
       minzoom: caves.minZoom,
       maxzoom: caves.maxZoom,
+      attribution: rasterTilesAttribution(),
     }
     layers.push({
       id: 'mg_caves',
@@ -884,6 +1173,7 @@ function applyRasterLayers() {
 
 watch([mainRasterOpacity], applyMainRasterLayer)
 watch([cavesVisible, cavesOpacity], applyCavesLayer)
+watch(regionMapLayersVisible, applyRegionMapLayersVisibility)
 
 function escapeHtml(text) {
   return String(text)
@@ -926,10 +1216,18 @@ function isAllowedLinkUrl(url) {
   }
 }
 
-/** Popup images: local bundles under /images/ (see npm run download:mapgenie-bz-media). */
+/** Popup images: self-hosted under /images/ or Map Genie CDN (extracted `media` / detailImage URLs). */
 function isAllowedMediaUrl(url) {
   if (typeof url !== 'string') return false
-  return url.startsWith('/images/')
+  const u = url.trim()
+  if (u.startsWith('/images/')) return true
+  try {
+    const parsed = new URL(u)
+    if (parsed.protocol === 'https:' && isTrustedExternalLinkHost(parsed.hostname)) return true
+    return false
+  } catch {
+    return false
+  }
 }
 
 function parseMedia(prop) {
@@ -984,6 +1282,13 @@ function buildLocationPopupHtml(props) {
   const chunks = [`<div class="cdm-ml-popup-body">`]
   chunks.push(`<div class="cdm-ml-popup-title">${escapeHtml(title)}</div>`)
 
+  const groupTitle = typeof props.groupTitle === 'string' ? props.groupTitle.trim() : ''
+  const categoryTitle = typeof props.categoryTitle === 'string' ? props.categoryTitle.trim() : ''
+  const metaLine = [groupTitle, categoryTitle].filter(Boolean).join(' · ')
+  if (metaLine) {
+    chunks.push(`<div class="cdm-ml-popup-meta">${escapeHtml(metaLine)}</div>`)
+  }
+
   const regionTitle = typeof props.regionTitle === 'string' ? props.regionTitle.trim() : ''
   if (regionTitle) {
     chunks.push(`<div class="cdm-ml-popup-region">${escapeHtml(regionTitle)}</div>`)
@@ -1029,6 +1334,33 @@ function atlasRectForIcon(iconKey) {
   const key = typeof iconKey === 'string' ? iconKey : ''
   const atlas = markersAtlas.value
   return atlas[key] ?? atlas.other
+}
+
+function clearRegionHoverState() {
+  if (!map) return
+  if (hoveredRegionFid != null) {
+    try {
+      map.setFeatureState({ source: 'mg-regions', id: hoveredRegionFid }, { hover: false })
+    } catch {
+      /* layer/source may be gone */
+    }
+    hoveredRegionFid = null
+  }
+  try {
+    map.getCanvas().style.cursor = ''
+  } catch {
+    /* map may already be destroyed */
+  }
+}
+
+/** Toggle region fill / outline / labels; clears hover when hidden (matches Map Genie default when off). */
+function applyRegionMapLayersVisibility() {
+  if (!map || !map.getLayer('mg-regions-fill')) return
+  const vis = regionMapLayersVisible.value ? 'visible' : 'none'
+  for (const id of ['mg-regions-fill', 'mg-regions-line', 'mg-region-labels']) {
+    if (map.getLayer(id)) map.setLayoutProperty(id, 'visibility', vis)
+  }
+  if (!regionMapLayersVisible.value) clearRegionHoverState()
 }
 
 /** Region fill / outline / labels (Map Genie–like palette) */
@@ -1171,49 +1503,83 @@ function mountMapGenieRegions() {
     focusRegionById(rid)
     showDetailPanel('')
   })
+
+  applyRegionMapLayersVisibility()
 }
 
-async function mountMapGenieLocationSymbols() {
-  if (!map || map.getSource('mg-locations')) return
-
-  const feats = locationFeatures.value
-  const usedIcons = new Set()
-  for (const f of feats) {
-    const icon = f.properties?.icon
-    if (typeof icon === 'string') usedIcons.add(icon)
+async function ensureAllMarkerImagesLoaded() {
+  if (!map) return
+  if (props.dataset.useCustomMapIcons === true) {
+    await registerMapLibrePinImages(map)
+    return
   }
-
   const atlasImage = await loadCrossOriginImage(markersAtlasPng.value)
-
-  for (const iconName of usedIcons) {
-    if (map.hasImage(iconName)) continue
-    const rect = atlasRectForIcon(iconName)
+  const atlas = markersAtlas.value && typeof markersAtlas.value === 'object' ? markersAtlas.value : {}
+  const keys = new Set([
+    ...Object.keys(atlas),
+    ...locationFeatures.value.map((f) => f.properties?.icon).filter((x) => typeof x === 'string'),
+  ])
+  for (const iconName of keys) {
+    if (!iconName || map.hasImage(iconName)) continue
+    let rect = atlasRectForIcon(iconName)
+    if (!rect) rect = atlasRectForIcon('other')
     if (!rect) continue
-
     const canvas = document.createElement('canvas')
     canvas.width = rect.width
     canvas.height = rect.height
     const ctx = canvas.getContext('2d')
     if (!ctx) continue
-    ctx.drawImage(
-      atlasImage,
-      rect.x,
-      rect.y,
-      rect.width,
-      rect.height,
-      0,
-      0,
-      rect.width,
-      rect.height,
-    )
-    const bitmap = await createImageBitmap(canvas)
-    map.addImage(iconName, bitmap, { pixelRatio: rect.pixelRatio ?? 2 })
+    try {
+      ctx.drawImage(
+        atlasImage,
+        rect.x,
+        rect.y,
+        rect.width,
+        rect.height,
+        0,
+        0,
+        rect.width,
+        rect.height,
+      )
+      const bitmap = await createImageBitmap(canvas)
+      map.addImage(iconName, bitmap, { pixelRatio: rect.pixelRatio ?? 2 })
+    } catch {
+      /* invalid slice / decode */
+    }
   }
+}
+
+async function mountMapGenieLocationSymbols() {
+  if (!map || map.getSource('mg-locations')) return
+
+  await ensureAllMarkerImagesLoaded()
 
   map.addSource('mg-locations', {
     type: 'geojson',
     data: locationsGeo.value,
   })
+
+  /** 自定义 SVG 与 Map Genie 主标点同格 66×88；icon-size 相对原 100×124 逻辑宽约 ×(100/66) 以维持屏上大小 */
+  const iconSizeLayout =
+    props.dataset.useCustomMapIcons === true
+      ? /** @type {import('maplibre-gl').DataDrivenPropertyValueSpecification<number>} */ ([
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          7,
+          0.3,
+          8,
+          0.36,
+          9,
+          0.44,
+          11,
+          0.53,
+          13,
+          0.62,
+          15,
+          0.71,
+        ])
+      : ['interpolate', ['linear'], ['zoom'], 9, 0.58, 12, 0.72, 15, 0.82]
 
   map.addLayer({
     id: 'mg-locations-symbols',
@@ -1222,7 +1588,7 @@ async function mountMapGenieLocationSymbols() {
     layout: {
       'icon-image': ['get', 'icon'],
       /** Reference: collision hides overlap at low zoom; from ~zoom 10 allow dense overlapping pins */
-      'icon-size': ['interpolate', ['linear'], ['zoom'], 9, 0.42, 12, 0.52, 15, 0.58],
+      'icon-size': iconSizeLayout,
       'icon-anchor': 'bottom',
       'icon-allow-overlap': true,
       'icon-ignore-placement': true,
@@ -1245,19 +1611,26 @@ async function mountMapGenieLocationSymbols() {
     if (map) map.getCanvas().style.cursor = ''
   })
 
-  applyLocationIconFilter()
+  applyLocationVisibilityFilter()
 }
 
 onMounted(() => {
   const el = mapContainerRef.value
   if (!el) return
 
+  const cfg0 = worldRasterConfig.value
+  const mapMinZoom =
+    typeof cfg0.mapViewMinZoom === 'number' && Number.isFinite(cfg0.mapViewMinZoom)
+      ? cfg0.mapViewMinZoom
+      : cfg0.mainTileSet.minZoom
+
   map = new maplibregl.Map({
     container: el,
     style: buildStyle(),
     center: worldRasterConfig.value.initialCenterLngLat,
     zoom: worldRasterConfig.value.initialZoom,
-    minZoom: worldRasterConfig.value.mainTileSet.minZoom,
+    /** 可低于 raster 源的 minzoom，由 MapLibre 对高一级瓦片做 overscale，便于看全图 */
+    minZoom: mapMinZoom,
     maxZoom: worldRasterConfig.value.mainTileSet.maxZoom + 0.99,
     maxBounds: mapMaxBoundsLngLat.value ?? undefined,
     renderWorldCopies: false,
@@ -1284,14 +1657,7 @@ onMounted(() => {
 onUnmounted(() => {
   showDetailPanel('')
   clearRegionHighlightSelection()
-  if (map && hoveredRegionFid != null) {
-    try {
-      map.setFeatureState({ source: 'mg-regions', id: hoveredRegionFid }, { hover: false })
-    } catch {
-      /* map may already be destroyed */
-    }
-    hoveredRegionFid = null
-  }
+  clearRegionHoverState()
   resizeObs?.disconnect()
   resizeObs = null
   map?.remove()
@@ -1319,53 +1685,131 @@ onUnmounted(() => {
             </div>
 
             <div class="cdm-sidebar__body">
-              <!-- Categories + biomes: stacked on narrow sidebar; two columns when wide enough -->
+              <!-- Map Genie–ordered marker toggles (when `dataset.mapGenieGroups` exists) -->
               <div class="cdm-sidebar__pair">
-                <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.categories }">
-                  <button
-                    type="button"
-                    class="cdm-fold__trigger"
-                    :aria-expanded="sidebarFold.categories"
-                    aria-controls="cdm-fold-panel-categories"
-                    id="cdm-fold-heading-categories"
-                    @click="toggleSidebarFold('categories')"
-                  >
-                    <span class="cdm-fold__chevron" aria-hidden="true" />
-                    <span class="cdm-fold__title">Categories</span>
-                    <span class="cdm-fold__badge">{{ sidebarCategoryGroups.length }}</span>
-                  </button>
-                  <div
-                    id="cdm-fold-panel-categories"
-                    class="cdm-fold__panel"
-                    role="region"
-                    aria-labelledby="cdm-fold-heading-categories"
-                    :hidden="!sidebarFold.categories"
-                  >
-                    <div class="cdm-fold__toolbar">
-                      <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(true)">Show all</button>
-                      <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(false)">Hide all</button>
-                    </div>
-                    <div class="cdm-category-groups">
-                      <details
-                        v-for="(grp, gIdx) in sidebarCategoryGroups"
-                        :key="grp.groupTitle"
-                        class="cdm-details"
-                        :open="gIdx === 0"
-                      >
-                        <summary class="cdm-details__summary">{{ grp.groupTitle }}</summary>
-                        <div class="cdm-details__body">
-                          <div class="cdm-icon-chips cdm-icon-chips--scroll">
-                            <label v-for="icon in grp.icons" :key="`${grp.groupTitle}-${icon}`" class="cdm-chip">
-                              <input v-model="iconVisible[icon]" type="checkbox" />
-                              <span class="cdm-chip__text">{{ formatIconLabel(icon) }}</span>
-                              <span class="cdm-chip__cnt">{{ iconCounts[icon] ?? 0 }}</span>
-                            </label>
+                <template v-if="useMapGenieGroupedSidebar">
+                  <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.categories }">
+                    <button
+                      type="button"
+                      class="cdm-fold__trigger"
+                      :aria-expanded="sidebarFold.categories"
+                      aria-controls="cdm-fold-panel-mg-markers"
+                      id="cdm-fold-heading-mg-markers"
+                      @click="toggleSidebarFold('categories')"
+                    >
+                      <span class="cdm-fold__chevron" aria-hidden="true" />
+                      <span class="cdm-fold__title">Map markers</span>
+                      <span class="cdm-fold__badge">{{ (markerFilterSidebarFromApi || []).length }}</span>
+                    </button>
+                    <div
+                      id="cdm-fold-panel-mg-markers"
+                      class="cdm-fold__panel"
+                      role="region"
+                      aria-labelledby="cdm-fold-heading-mg-markers"
+                      :hidden="!sidebarFold.categories"
+                    >
+                      <div class="cdm-fold__toolbar">
+                        <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(true)">Show all</button>
+                        <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(false)">Hide all</button>
+                      </div>
+                      <div class="cdm-mapgenie-marker-groups">
+                        <details
+                          v-for="(grp, gIdx) in markerFilterSidebarFromApi || []"
+                          :key="grp.id"
+                          class="cdm-details cdm-details--mapgenie"
+                          :open="gIdx === 0"
+                        >
+                          <summary class="cdm-details__summary cdm-details__summary--mg-group">
+                            <span class="cdm-mg-group-dot" :style="mapGroupDotStyle(grp.color)" aria-hidden="true" />
+                            <span class="cdm-mg-group-title">{{ formatMgHeading(grp.title) }}</span>
+                          </summary>
+                          <div class="cdm-details__toolbar">
+                            <button type="button" class="cdm-side-linkbtn" @click="setMarkerGroupCategoriesVisible(grp, true)">
+                              Show all
+                            </button>
+                            <button type="button" class="cdm-side-linkbtn" @click="setMarkerGroupCategoriesVisible(grp, false)">
+                              Hide all
+                            </button>
                           </div>
-                        </div>
-                      </details>
+                          <div class="cdm-details__body">
+                            <div class="cdm-icon-chips cdm-icon-chips--dense cdm-icon-chips--scroll">
+                              <label
+                                v-for="cat in grp.categories"
+                                :key="cat.visibilityKey"
+                                class="cdm-chip"
+                                :class="{ 'cdm-chip--off': markerLayerVisible[cat.visibilityKey] === false }"
+                              >
+                                <input v-model="markerLayerVisible[cat.visibilityKey]" type="checkbox" />
+                                <span class="cdm-chip__text">{{ cat.title }}</span>
+                                <span class="cdm-chip__cnt">{{ cat.count }}</span>
+                              </label>
+                            </div>
+                          </div>
+                        </details>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </template>
+                <template v-else>
+                  <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.categories }">
+                    <button
+                      type="button"
+                      class="cdm-fold__trigger"
+                      :aria-expanded="sidebarFold.categories"
+                      aria-controls="cdm-fold-panel-categories"
+                      id="cdm-fold-heading-categories"
+                      @click="toggleSidebarFold('categories')"
+                    >
+                      <span class="cdm-fold__chevron" aria-hidden="true" />
+                      <span class="cdm-fold__title">Categories</span>
+                      <span class="cdm-fold__badge">{{ sidebarCategoryGroups.length }}</span>
+                    </button>
+                    <div
+                      id="cdm-fold-panel-categories"
+                      class="cdm-fold__panel"
+                      role="region"
+                      aria-labelledby="cdm-fold-heading-categories"
+                      :hidden="!sidebarFold.categories"
+                    >
+                      <div class="cdm-fold__toolbar">
+                        <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(true)">Show all</button>
+                        <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(false)">Hide all</button>
+                      </div>
+                      <div class="cdm-category-groups">
+                        <details
+                          v-for="(grp, gIdx) in sidebarCategoryGroups"
+                          :key="grp.groupTitle"
+                          class="cdm-details"
+                          :open="gIdx === 0"
+                        >
+                          <summary class="cdm-details__summary">{{ grp.groupTitle }}</summary>
+                          <div class="cdm-details__toolbar">
+                            <button type="button" class="cdm-side-linkbtn" @click="setLegacyCategoryGroupVisible(grp, true)">
+                              Show all
+                            </button>
+                            <button type="button" class="cdm-side-linkbtn" @click="setLegacyCategoryGroupVisible(grp, false)">
+                              Hide all
+                            </button>
+                          </div>
+                          <div class="cdm-details__body">
+                            <div class="cdm-icon-chips cdm-icon-chips--dense cdm-icon-chips--scroll">
+                              <label
+                                v-for="item in grp.items"
+                                :key="item.visibilityKey"
+                                class="cdm-chip"
+                                :class="{ 'cdm-chip--off': markerLayerVisible[item.visibilityKey] === false }"
+                              >
+                                <input v-model="markerLayerVisible[item.visibilityKey]" type="checkbox" />
+                                <span class="cdm-chip__text">{{ item.label }}</span>
+                                <span class="cdm-chip__cnt">{{ item.count }}</span>
+                              </label>
+                            </div>
+                          </div>
+                        </details>
+                      </div>
+                    </div>
+                  </div>
+                </template>
 
                 <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.biomes }">
                   <button
@@ -1387,7 +1831,16 @@ onUnmounted(() => {
                     aria-labelledby="cdm-fold-heading-biomes"
                     :hidden="!sidebarFold.biomes"
                   >
-                    <p class="cdm-biomes-tip">Right-click a biome polygon on the map to fly to its center.</p>
+                    <div class="cdm-fold__toolbar">
+                      <button type="button" class="cdm-side-linkbtn" @click="setAllBiomesLayersVisible(true)">Show all</button>
+                      <button type="button" class="cdm-side-linkbtn" @click="setAllBiomesLayersVisible(false)">Hide all</button>
+                    </div>
+                    <p v-if="regionMapLayersVisible" class="cdm-biomes-tip">
+                      Right-click a biome polygon on the map to fly to its center.
+                    </p>
+                    <p v-else class="cdm-biomes-tip cdm-biomes-tip--off">
+                      Turn on “Show biomes” in the floating map toolbar to draw polygons and sync the map with this list.
+                    </p>
                     <ul class="cdm-side-list cdm-side-list--regions">
                       <li v-for="r in regionItems" :key="r.id">
                         <button type="button" class="cdm-side-item cdm-side-item--region" @click="focusRegionById(r.id)">
@@ -1399,8 +1852,12 @@ onUnmounted(() => {
                 </div>
               </div>
 
-              <!-- Resources -->
-              <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.resources }">
+              <!-- Resources (Below Zero specialData rows; hidden when empty) -->
+              <div
+                v-if="resourceSidebarPanels.length > 0"
+                class="cdm-fold cdm-side-panel"
+                :class="{ 'cdm-fold--expanded': sidebarFold.resources }"
+              >
                 <button
                   type="button"
                   class="cdm-fold__trigger"
@@ -1420,15 +1877,20 @@ onUnmounted(() => {
                   aria-labelledby="cdm-fold-heading-resources"
                   :hidden="!sidebarFold.resources"
                 >
+                  <div class="cdm-fold__toolbar">
+                    <button type="button" class="cdm-side-linkbtn" @click="setAllResourcePanelsExpanded(true)">Show all</button>
+                    <button type="button" class="cdm-side-linkbtn" @click="setAllResourcePanelsExpanded(false)">Hide all</button>
+                  </div>
                   <template v-if="resourceSidebarPanels.length === 0">
                     <p class="cdm-resource-empty cdm-resource-empty--standalone">No matching resources (try clearing the search).</p>
                   </template>
                   <template v-else>
                     <details
-                      v-for="(panel, pIdx) in resourceSidebarPanels"
+                      v-for="panel in resourceSidebarPanels"
                       :key="panel.groupTitle"
                       class="cdm-details cdm-details--ruled"
-                      :open="pIdx === 0"
+                      :open="!!resourcePanelOpen[panel.groupTitle]"
+                      @toggle="onResourcePanelToggle($event, panel.groupTitle)"
                     >
                       <summary class="cdm-details__summary cdm-details__summary--strong">
                         {{ panel.groupTitle }}
@@ -1496,8 +1958,12 @@ onUnmounted(() => {
                 </div>
               </div>
 
-              <!-- POIs: two-column cards -->
-              <div class="cdm-fold cdm-side-panel" :class="{ 'cdm-fold--expanded': sidebarFold.poi }">
+              <!-- Legacy POI list (hidden when using Map Genie grouped sidebar — avoids huge DOM + map resize issues) -->
+              <div
+                v-if="showPoiListFold"
+                class="cdm-fold cdm-side-panel"
+                :class="{ 'cdm-fold--expanded': sidebarFold.poi }"
+              >
                 <button
                   type="button"
                   class="cdm-fold__trigger"
@@ -1517,6 +1983,10 @@ onUnmounted(() => {
                   aria-labelledby="cdm-fold-heading-poi"
                   :hidden="!sidebarFold.poi"
                 >
+                  <div class="cdm-fold__toolbar">
+                    <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(true)">Show all</button>
+                    <button type="button" class="cdm-side-linkbtn" @click="setAllCategoriesVisible(false)">Hide all</button>
+                  </div>
                   <ul class="cdm-side-list cdm-side-list--locations cdm-side-list--grid2">
                     <li v-for="f in filteredPoiLocations" :key="f.properties.id">
                       <button type="button" class="cdm-side-item cdm-side-item--loc" @click="focusLocationById(f.properties.id)">
@@ -1539,7 +2009,7 @@ onUnmounted(() => {
               <div
                 class="cdm-toolbar cdm-toolbar--float panzoom-exclude"
                 role="group"
-                aria-label="Basemap opacity"
+                aria-label="Map overlays: basemap opacity and biome polygons"
               >
                 <label class="cdm-range">
                   <span class="cdm-range__label">Base map</span>
@@ -1550,6 +2020,10 @@ onUnmounted(() => {
                     max="1"
                     step="0.05"
                   />
+                </label>
+                <label v-if="hasRegionFeatures" class="cdm-check">
+                  <input v-model="regionMapLayersVisible" type="checkbox" />
+                  <span>Show biomes</span>
                 </label>
                 <template v-if="hasCavesLayer">
                   <label class="cdm-check">
@@ -2060,6 +2534,47 @@ onUnmounted(() => {
   letter-spacing: 0.07em;
 }
 
+.cdm-mapgenie-marker-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cdm-details--mapgenie {
+  border-color: rgba(92, 124, 148, 0.28);
+}
+
+.cdm-details__summary--mg-group {
+  justify-content: flex-start;
+  gap: 10px;
+  color: rgba(214, 228, 236, 0.95);
+}
+
+.cdm-details__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 2px 10px 8px;
+  margin: 0 0 2px;
+  border-bottom: 1px solid rgba(92, 124, 148, 0.18);
+}
+
+.cdm-mg-group-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.cdm-mg-group-title {
+  flex: 1;
+  text-align: left;
+  min-width: 0;
+}
+
 .cdm-details__count {
   font-family: Oxanium, ui-monospace, monospace;
   font-size: 0.62rem;
@@ -2241,6 +2756,29 @@ onUnmounted(() => {
   padding-right: 2px;
 }
 
+.cdm-icon-chips--dense {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 8px;
+  flex-wrap: unset;
+}
+
+.cdm-icon-chips--dense .cdm-chip__text {
+  max-width: none;
+  white-space: normal;
+  line-height: 1.25;
+  word-break: break-word;
+}
+
+.cdm-chip--off {
+  opacity: 0.58;
+}
+
+.cdm-chip--off .cdm-chip__text {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
 .cdm-chip {
   display: inline-flex;
   align-items: center;
@@ -2309,6 +2847,10 @@ onUnmounted(() => {
   font-size: 0.65rem;
   line-height: 1.4;
   color: var(--cdm-faint);
+}
+
+.cdm-biomes-tip--off {
+  color: var(--cdm-muted);
 }
 
 .cdm-side-item--region {
@@ -2541,6 +3083,13 @@ onUnmounted(() => {
     sans-serif;
   color: #e8f2f3;
   line-height: 1.35;
+}
+
+.cdm-rich-html .cdm-ml-popup-meta {
+  margin: -2px 0 6px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: rgba(168, 198, 208, 0.78);
 }
 
 .cdm-rich-html .cdm-ml-popup-region {

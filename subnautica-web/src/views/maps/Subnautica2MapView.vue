@@ -1,43 +1,27 @@
 <template>
-  <div class="map-sn2-page">
-    <section class="map-sn2-section" aria-labelledby="map-sn2-heading">
-      <div class="container">
-        <div class="map-sn2-content">
-          <h1 id="map-sn2-heading">Subnautica 2 Map</h1>
-          <p>
-            A public interactive map for Subnautica 2 is not wired into this build yet. When Unknown Worlds
-            Entertainment publishes enough stable world reference material, this route will host the same style
-            of pan–zoom atlas used for the first game and for Below Zero.
-          </p>
-          <p>
-            For now you can open the
-            <RouterLink to="/maps/subnautica">Subnautica map</RouterLink>
-            or the
-            <RouterLink to="/maps/subnautica-below-zero">Below Zero map</RouterLink>
-            from the home hero, or return to the
-            <RouterLink to="/">home page</RouterLink>.
-          </p>
-        </div>
-      </div>
-    </section>
+  <div class="map-route-page">
+    <CaveDepthMapView :dataset="subnautica2MapGenieDataset" class="map-route-page__map" />
   </div>
 </template>
 
 <script setup>
-// 《深海迷航 2》地图占位说明（不编造数据源或上线日期）
+import { defineAsyncComponent } from 'vue'
+import { subnautica2MapGenieDataset } from '@/data/mapgenie-sn2/index.js'
+
+const CaveDepthMapView = defineAsyncComponent(() => import('@/components/CaveDepthMapView.vue'))
 </script>
 
 <style scoped>
-.map-sn2-page {
+.map-route-page {
   flex: 1;
-  padding-block: clamp(2rem, 5vw, 3.5rem);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.map-sn2-content {
-  max-width: 720px;
-}
-
-.map-sn2-content h1 {
-  margin-bottom: 0.75em;
+.map-route-page__map {
+  flex: 1;
+  min-height: 0;
 }
 </style>

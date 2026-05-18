@@ -4,24 +4,28 @@
  * Usage:
  *   node scripts/verify-mapgenie-markers.mjs
  *   node scripts/verify-mapgenie-markers.mjs belowZero
+ *   node scripts/verify-mapgenie-markers.mjs subnautica2
  */
 import fs from 'node:fs'
 import {
   extractJsonAssignment,
   fetchMapgeniePageHtml,
   MAPGENIE_BELOW_ZERO_WORLD,
+  MAPGENIE_SUBNAUTICA_2_WORLD,
   MAPGENIE_SUBNAUTICA_WORLD,
 } from './lib/extract-mapgenie-html-json.mjs'
-import { MAPGENIE_BZ_MARKERS_JSON, MAPGENIE_MARKERS_JSON } from './lib/mapgenie-data-paths.mjs'
+import { MAPGENIE_BZ_MARKERS_JSON, MAPGENIE_MARKERS_JSON, MAPGENIE_SN2_MARKERS_JSON } from './lib/mapgenie-data-paths.mjs'
 
 const GAMES = {
   subnautica: { pageUrl: MAPGENIE_SUBNAUTICA_WORLD, markersJson: MAPGENIE_MARKERS_JSON },
   belowZero: { pageUrl: MAPGENIE_BELOW_ZERO_WORLD, markersJson: MAPGENIE_BZ_MARKERS_JSON },
+  subnautica2: { pageUrl: MAPGENIE_SUBNAUTICA_2_WORLD, markersJson: MAPGENIE_SN2_MARKERS_JSON },
 }
 
 function resolveGameKey() {
   const a = (process.argv[2] || 'subnautica').toLowerCase()
   if (a === 'belowzero' || a === 'bz' || a === 'subnautica-below-zero') return 'belowZero'
+  if (a === 'sn2' || a === 'subnautica2' || a === 'subnautica-2') return 'subnautica2'
   return 'subnautica'
 }
 
