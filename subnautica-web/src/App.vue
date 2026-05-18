@@ -30,7 +30,7 @@ const isMapLayout = computed(() => route.meta.layout === 'map')
   flex: 1;
   display: flex;
   flex-direction: column;
-  min-height: 0;
+  overflow: hidden;
 }
 
 .app-site__main {
