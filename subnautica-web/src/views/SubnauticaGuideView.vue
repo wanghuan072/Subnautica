@@ -67,6 +67,9 @@
               </button>
               <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-mods')">Mods</button>
               <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-faq')">FAQ</button>
+              <button type="button" class="gh-pill gh-pill--ghost" @click="scrollToSection('hub-comments')">
+                Comments
+              </button>
             </div>
           </div>
         </section>
@@ -274,6 +277,10 @@
             </article>
           </div>
         </section>
+
+        <section id="hub-comments" class="gh-section gh-scroll-target" aria-labelledby="hub-comments-sn1">
+          <GameHubCommentSection section-slug="subnautica" heading-id="hub-comments-sn1" />
+        </section>
       </div>
     </div>
   </article>
@@ -281,6 +288,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import GameHubCommentSection from '@/components/GameHubCommentSection.vue'
 import { guidesForClassify, modsForClassify } from '@/data/gameHubResolve.js'
 import { useGameHubToc } from '@/composables/useGameHubToc.js'
 

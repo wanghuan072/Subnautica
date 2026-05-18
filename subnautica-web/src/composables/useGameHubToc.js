@@ -7,6 +7,7 @@ const toc = [
   { id: 'hub-mods', label: 'Mods' },
   { id: 'hub-multiplayer', label: 'Multiplayer' },
   { id: 'hub-faq', label: 'FAQ' },
+  { id: 'hub-comments', label: 'Comments' },
 ]
 
 /** 左侧 TOC + 页内锚点滚动（各作品导览页共用，不含文案数据） */
