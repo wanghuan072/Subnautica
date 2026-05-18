@@ -138,7 +138,6 @@
                     src="/images/video-bg.webp"
                     alt=""
                     decoding="async"
-                    fetchpriority="low"
                   />
                   <div class="home-trailer-poster__scrim" aria-hidden="true" />
                   <button

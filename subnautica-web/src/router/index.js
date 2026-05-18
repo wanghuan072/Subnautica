@@ -15,12 +15,13 @@ import {
   resolveCanonicalUrl,
 } from '@/seo/documentMeta.js'
 import { buildDocumentTitle } from '@/utils/pageSeo.js'
+import HomeView from '@/views/HomeView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => import('@/views/HomeView.vue'),
+    component: HomeView,
     meta: {
       completeTitle: true,
       title: HOME_PAGE_DOCUMENT_TITLE,
