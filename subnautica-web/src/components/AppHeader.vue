@@ -3,7 +3,7 @@
     <div class="app-header__accent" aria-hidden="true" />
     <div class="container app-header__inner">
       <RouterLink class="app-header__brand" to="/" aria-label="Subnautica Map home" @click="menuOpen = false">
-        <img class="app-header__logo" src="/images/logo.png" alt="" />
+        <img class="app-header__logo" src="/images/logo.webp" alt="" decoding="async" />
         <span class="app-header__title-wrap">
           <span class="app-header__title">Subnautica</span>
         </span>

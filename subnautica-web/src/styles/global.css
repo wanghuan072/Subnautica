@@ -22,8 +22,9 @@
   --color-text: #f2fdff;
   --color-muted: rgba(210, 240, 248, 0.78);
   --color-line: rgba(124, 245, 255, 0.22);
-  --font-display: Oxanium, 'Noto Sans', system-ui, sans-serif;
-  --font-body: 'Noto Sans', system-ui, sans-serif;
+  /* 系统字体栈：避免 @fontsource 首屏额外网络请求与字重切换导致的 CLS */
+  --font-display: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-body: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   --radius-lg: 18px;
   --shadow-glow: 0 0 40px rgba(46, 243, 217, 0.15);
 }

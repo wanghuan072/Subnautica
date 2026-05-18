@@ -85,7 +85,7 @@
               aria-label="Open Subnautica Below Zero map"
             >
               <div class="gh-mapslot__thumb">
-                <img src="/images/hero-03.avif" alt="" />
+                <img src="/images/hero-03.webp" alt="" decoding="async" />
               </div>
               <div class="gh-mapslot__body">
                 <h3 class="gh-mapslot__title">Below Zero interactive map</h3>
@@ -709,10 +709,13 @@ const hubMods = computed(() => modsForClassify('game2'))
   flex: 0 0 44%;
   min-width: 132px;
   max-width: 220px;
-  min-height: 100%;
-  align-self: stretch;
+  align-self: center;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.35);
+}
+
+.gh-mapslot--bz .gh-mapslot__thumb {
+  aspect-ratio: 340 / 191;
 }
 
 .gh-mapslot__thumb img {

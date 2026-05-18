@@ -933,7 +933,7 @@ onUnmounted(() => {
   box-sizing: border-box;
   background: var(--sn-deep);
   color: var(--sn-text);
-  font-family: 'Noto Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
 .sn-global-error {
@@ -989,7 +989,7 @@ onUnmounted(() => {
 
 .sn-detail-panel__title {
   margin: 0;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1030,7 +1030,7 @@ onUnmounted(() => {
 
 .sn-detail-panel__empty-title {
   margin: 0 0 10px;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 1.05rem;
   font-weight: 700;
   color: #fff;
@@ -1166,7 +1166,7 @@ onUnmounted(() => {
 
 .sn-section h2 {
   margin: 0 0 12px;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -1348,7 +1348,7 @@ onUnmounted(() => {
   border-radius: 4px;
   background: rgba(29, 57, 94, 0.94);
   color: var(--sn-blizzard);
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -1577,7 +1577,7 @@ onUnmounted(() => {
 
 .sn-marker-popup__title {
   margin: 0 0 6px;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.92rem;
   font-weight: 700;
   line-height: 1.35;

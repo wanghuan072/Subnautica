@@ -2099,7 +2099,7 @@ onUnmounted(() => {
     radial-gradient(ellipse 120% 80% at 12% -10%, rgba(78, 157, 148, 0.08), transparent 55%),
     radial-gradient(ellipse 90% 60% at 88% 100%, rgba(212, 169, 58, 0.06), transparent 50%);
   color: var(--cdm-muted);
-  font-family: 'Noto Sans', system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2252,7 +2252,7 @@ onUnmounted(() => {
 
 .cdm-detail-panel__title {
   margin: 0;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -2294,7 +2294,7 @@ onUnmounted(() => {
 
 .cdm-detail-panel__empty-title {
   margin: 0 0 8px;
-  font-family: Oxanium, 'Noto Sans', sans-serif;
+  font-family: var(--font-display);
   font-size: 1rem;
   font-weight: 700;
   color: var(--cdm-text);
@@ -2443,7 +2443,7 @@ onUnmounted(() => {
 
 .cdm-fold__badge {
   flex-shrink: 0;
-  font-family: Oxanium, ui-monospace, monospace;
+  font-family: ui-monospace, monospace;
   font-size: 0.65rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -2576,7 +2576,7 @@ onUnmounted(() => {
 }
 
 .cdm-details__count {
-  font-family: Oxanium, ui-monospace, monospace;
+  font-family: ui-monospace, monospace;
   font-size: 0.62rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
@@ -3076,11 +3076,7 @@ onUnmounted(() => {
 
 .cdm-rich-html .cdm-ml-popup-title {
   margin: 0 0 8px;
-  font:
-    600 14px Oxanium,
-    'Noto Sans',
-    system-ui,
-    sans-serif;
+  font: 600 14px/1.35 var(--font-display);
   color: #e8f2f3;
   line-height: 1.35;
 }

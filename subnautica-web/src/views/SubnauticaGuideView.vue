@@ -88,7 +88,7 @@
               aria-label="Open Subnautica map"
             >
               <div class="gh-mapslot__thumb">
-                <img src="/images/hero-01.jpg" alt="" />
+                <img src="/images/hero-01.webp" alt="" />
               </div>
               <div class="gh-mapslot__body">
                 <h3 class="gh-mapslot__title">Subnautica interactive map</h3>
@@ -722,10 +722,14 @@ const hubMods = computed(() => modsForClassify('game1'))
   flex: 0 0 44%;
   min-width: 132px;
   max-width: 220px;
-  min-height: 100%;
-  align-self: stretch;
+  align-self: center;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.35);
+}
+
+.gh-mapslot--sn1 .gh-mapslot__thumb,
+.gh-mapslot--sn2 .gh-mapslot__thumb {
+  aspect-ratio: 460 / 215;
 }
 
 .gh-mapslot__thumb img {

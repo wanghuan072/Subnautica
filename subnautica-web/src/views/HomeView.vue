@@ -50,7 +50,12 @@
               aria-label="Open the Subnautica full-screen map"
             >
               <div class="home-mapslot__thumb">
-                <img src="/images/hero-01.jpg" alt="" />
+                <img
+                  src="/images/hero-01.webp"
+                  alt=""
+                  decoding="async"
+                  fetchpriority="high"
+                />
               </div>
               <div class="home-mapslot__body">
                 <h2 class="home-mapslot__title">Subnautica Map</h2>
@@ -66,7 +71,7 @@
               aria-label="Open the Subnautica 2 full-screen interactive map"
             >
               <div class="home-mapslot__thumb">
-                <img src="/images/hero-02.jpg" alt="" />
+                <img src="/images/hero-02.webp" alt="" decoding="async" />
               </div>
               <div class="home-mapslot__body">
                 <h2 class="home-mapslot__title">Subnautica 2 Map</h2>
@@ -82,7 +87,7 @@
               aria-label="Open the Subnautica Below Zero full-screen map"
             >
               <div class="home-mapslot__thumb">
-                <img src="/images/hero-03.avif" alt="" />
+                <img src="/images/hero-03.webp" alt="" decoding="async" />
               </div>
               <div class="home-mapslot__body">
                 <h2 class="home-mapslot__title">Subnautica Below Zero Map</h2>
@@ -132,8 +137,6 @@
                     class="home-trailer-poster__img"
                     src="/images/video-bg.webp"
                     alt=""
-                    width="1280"
-                    height="720"
                     decoding="async"
                     fetchpriority="low"
                   />
@@ -177,7 +180,7 @@
 
         <div class="home-about-top">
           <div class="home-about-top__media">
-            <img class="home-about-top__img" src="/images/about-img.jpg" alt="" />
+            <img class="home-about-top__img" src="/images/about-img.webp" alt="" decoding="async" loading="lazy" />
           </div>
           <div class="home-about-top__copy">
             <p>
@@ -608,10 +611,18 @@ onUnmounted(() => {
   flex: 0 0 44%;
   min-width: 132px;
   max-width: 220px;
-  min-height: 100%;
-  align-self: stretch;
+  align-self: center;
   overflow: hidden;
   background: rgba(0, 0, 0, 0.35);
+}
+
+.home-mapslot--sn1 .home-mapslot__thumb,
+.home-mapslot--sn2 .home-mapslot__thumb {
+  aspect-ratio: 460 / 215;
+}
+
+.home-mapslot--bz .home-mapslot__thumb {
+  aspect-ratio: 340 / 191;
 }
 
 .home-mapslot__thumb img {
@@ -876,11 +887,12 @@ onUnmounted(() => {
   border: 2px solid var(--color-line);
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
   background: rgba(6, 18, 32, 0.6);
+  aspect-ratio: 658 / 987;
 }
 
 .home-about-top__img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
 }

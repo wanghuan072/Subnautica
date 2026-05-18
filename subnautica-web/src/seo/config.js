@@ -12,7 +12,7 @@ export const seoConfig = {
   fullDomain: 'https://subnauticamap.org',
   siteName: 'Subnautica Map',
   /** 默认分享图（站内路径，运行时拼为绝对 URL） */
-  defaultOgImage: '/images/hero-01.jpg',
+  defaultOgImage: '/images/logo.webp',
   defaults: {
     title: SITE_FALLBACK_TITLE_SEGMENT,
     description: SITE_DEFAULT_DESCRIPTION,

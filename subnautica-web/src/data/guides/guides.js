@@ -538,7 +538,7 @@ export default [
   early tools.
 </p>
 <figure>
-  <img src="/images/hero-01.jpg" alt="Contrasting warmer shallow reef image as a visual reminder of oxygen-rich zones" width="1200" height="630" loading="lazy" decoding="async" />
+  <img src="/images/guides/guide01.webp" alt="Contrasting warmer shallow reef image as a visual reminder of oxygen-rich zones" width="1200" height="630" loading="lazy" decoding="async" />
   <figcaption>Oxygen plants and lit Seatruck cabins both extend range—pick whichever is closer before you gamble on a blind tunnel.</figcaption>
 </figure>
 <div class="article-table-scroll">
@@ -694,7 +694,7 @@ export default [
       'What Unknown Worlds has publicly positioned for Subnautica 2—multiplayer, new vehicles, DNA-style progression, currents—and practical habits for squads during a long early access.',
     tags: ['Subnautica 2', 'Early access', 'Co-op'],
     publishDate: '2026-05-12',
-    imageUrl: '/images/hero-02.jpg',
+    imageUrl: '/images/guides/guide06.webp',
     imageAlt: 'Alien ocean horizon at dusk',
     classify: 'game3',
         seo: {
@@ -714,7 +714,7 @@ export default [
   you whether your save is safe this week.
 </p>
 <figure>
-  <img src="/images/hero-02.jpg" alt="Alien ocean horizon suggesting Subnautica 2 early access exploration mood" width="1200" height="630" loading="lazy" decoding="async" />
+  <img src="/images/guides/guide06-01.webp" alt="Alien ocean horizon suggesting Subnautica 2 early access exploration mood" width="1200" height="630" loading="lazy" decoding="async" />
   <figcaption>Marketing art sets tone—your live build’s HUD, currents, and co-op UI are what matter day-to-day in early access.</figcaption>
 </figure>
 

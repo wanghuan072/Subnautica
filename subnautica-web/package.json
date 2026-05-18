@@ -36,8 +36,6 @@
     "localize:offline-assets": "npm run download:mapgenie-atlas && npm run download:mapgenie-media && npm run download:subnautica-wikia"
   },
   "dependencies": {
-    "@fontsource/noto-sans": "^5.2.8",
-    "@fontsource/oxanium": "^5.2.8",
     "@panzoom/panzoom": "^4.6.2",
     "maplibre-gl": "^5.24.0",
     "vue": "^3.5.32",
