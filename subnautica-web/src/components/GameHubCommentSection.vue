@@ -118,7 +118,7 @@ function formatTime(iso) {
   try {
     const d = new Date(iso)
     if (Number.isNaN(d.getTime())) return String(iso)
-    return d.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })
+    return d.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' })
   } catch {
     return String(iso)
   }
