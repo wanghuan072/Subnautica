@@ -60,9 +60,9 @@
 
       <h2>Related policies</h2>
       <p>
-        Privacy practices are described in the <RouterLink to="/privacy">Privacy</RouterLink> policy. Rules of use,
-        disclaimers, and liability caps appear in the <RouterLink to="/terms">Terms of use</RouterLink>. Operational
-        questions should go to <RouterLink to="/contact">Contact</RouterLink>.
+        Privacy practices are described in the <a href="/privacy">Privacy</a> policy. Rules of use,
+        disclaimers, and liability caps appear in the <a href="/terms">Terms of use</a>. Operational
+        questions should go to <a href="/contact">Contact</a>.
       </p>
       <p><strong>Last updated:</strong> May 12, 2026</p>
     </div>

@@ -23,7 +23,7 @@
       <p>
         Most pages on subnauticamap.org are static or client-rendered reference material. There is no account system on
         this domain at launch, which means we do not ask you to register a username or password. The
-        <RouterLink to="/contact">Contact</RouterLink> page lists an email address; if you write to that address, your
+        <a href="/contact">Contact</a> page lists an email address; if you write to that address, your
         message and headers will be stored in the recipient’s mailbox according to their provider’s retention rules.
       </p>
       <p>
@@ -75,7 +75,7 @@
       <p>
         Depending on where you live, privacy laws may grant you rights to access, correct, export, or delete personal
         data tied to a controller. Because we operate a lightweight fan site, we may need reasonable proof that a request
-        relates to your own data before taking action. Email the address on the <RouterLink to="/contact">Contact</RouterLink>
+        relates to your own data before taking action. Email the address on the <a href="/contact">Contact</a>
         page with the subject “privacy request” and describe the right you wish to exercise.
       </p>
 
@@ -96,8 +96,8 @@
 
       <h2>Related documents</h2>
       <p>
-        Read the <RouterLink to="/terms">Terms of use</RouterLink> for acceptable behaviour and liability limits, and the
-        <RouterLink to="/copyright">Copyright</RouterLink> page for trademark attribution.
+        Read the <a href="/terms">Terms of use</a> for acceptable behaviour and liability limits, and the
+        <a href="/copyright">Copyright</a> page for trademark attribution.
       </p>
     </div>
   </article>

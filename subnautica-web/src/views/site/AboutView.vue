@@ -63,7 +63,7 @@
       <p>
         Coordinates, biome names, and cave passages can change when a game updates world geometry. When we become aware
         of a breaking change, we queue revisions to legends and guide cross-links. Reporting a mismatch helps everyone;
-        see the <RouterLink to="/contact">Contact</RouterLink> page for the best address to reach the maintainer.
+        see the <a href="/contact">Contact</a> page for the best address to reach the maintainer.
       </p>
 
       <h2>Accessibility and international readers</h2>
@@ -78,15 +78,15 @@
       <p>
         The project is maintained as a long-term hobby site. There are no paywalled guides on subnauticamap.org and no
         third-party login is required to read public pages. If lightweight analytics are enabled in the future, they
-        will be described transparently in the <RouterLink to="/privacy">Privacy</RouterLink> policy and limited to what
+        will be described transparently in the <a href="/privacy">Privacy</a> policy and limited to what
         is proportionate for capacity planning.
       </p>
 
       <h2>Related policies</h2>
       <p>
-        For rules of use, liability limits, and acceptable behaviour, read the <RouterLink to="/terms">Terms of use</RouterLink>.
-        For trademark and copyright notices specific to this domain, see <RouterLink to="/copyright">Copyright</RouterLink>.
-        For questions about correspondence, use <RouterLink to="/contact">Contact</RouterLink>.
+        For rules of use, liability limits, and acceptable behaviour, read the <a href="/terms">Terms of use</a>.
+        For trademark and copyright notices specific to this domain, see <a href="/copyright">Copyright</a>.
+        For questions about correspondence, use <a href="/contact">Contact</a>.
       </p>
     </div>
   </article>

@@ -43,9 +43,9 @@
           </div>
 
           <div class="home-hero-maprow" role="list" aria-label="Map entry points">
-            <RouterLink
+            <a
               class="home-mapslot home-mapslot--sn1"
-              to="/maps/subnautica"
+              href="/maps/subnautica"
               role="listitem"
               aria-label="Open the Subnautica full-screen map"
             >
@@ -62,11 +62,11 @@
                 <p class="home-mapslot__desc">Crash site 4546B—biomes, resources, and pins.</p>
                 <span class="home-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
 
-            <RouterLink
+            <a
               class="home-mapslot home-mapslot--sn2"
-              to="/maps/subnautica-2"
+              href="/maps/subnautica-2"
               role="listitem"
               aria-label="Open the Subnautica 2 full-screen interactive map"
             >
@@ -78,11 +78,11 @@
                 <p class="home-mapslot__desc">Early access world—Map Genie tiles, biomes, and pins.</p>
                 <span class="home-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
 
-            <RouterLink
+            <a
               class="home-mapslot home-mapslot--bz"
-              to="/maps/subnautica-below-zero"
+              href="/maps/subnautica-below-zero"
               role="listitem"
               aria-label="Open the Subnautica Below Zero full-screen map"
             >
@@ -94,7 +94,7 @@
                 <p class="home-mapslot__desc">Ice, shallows, and deeper biomes—own pin set.</p>
                 <span class="home-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
           </div>
         </div>
       </div>

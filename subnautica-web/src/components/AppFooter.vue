@@ -4,7 +4,7 @@
     <div class="container app-footer__inner">
       <div class="app-footer__top">
         <div class="app-footer__brand-block">
-          <RouterLink class="app-footer__brand" to="/">Subnautica Map</RouterLink>
+          <a class="app-footer__brand" href="/">Subnautica Map</a>
           <p class="app-footer__domain">
             <span class="app-footer__domain-label">Site</span>
             <span class="app-footer__domain-value" translate="no">subnauticamap.org</span>
@@ -19,22 +19,22 @@
         <nav class="app-footer__nav" aria-label="Site policies">
           <p class="app-footer__nav-k">Explore</p>
           <ul class="app-footer__links">
-            <li><RouterLink to="/about">About</RouterLink></li>
-            <li><RouterLink to="/contact">Contact</RouterLink></li>
-            <li><RouterLink to="/privacy">Privacy</RouterLink></li>
-            <li><RouterLink to="/terms">Terms</RouterLink></li>
-            <li><RouterLink to="/copyright">Copyright</RouterLink></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/privacy">Privacy</a></li>
+            <li><a href="/terms">Terms</a></li>
+            <li><a href="/copyright">Copyright</a></li>
           </ul>
         </nav>
 
         <nav class="app-footer__nav" aria-label="Games">
           <p class="app-footer__nav-k">Games</p>
           <ul class="app-footer__links">
-            <li><RouterLink to="/subnautica">Subnautica</RouterLink></li>
-            <li><RouterLink to="/subnautica-below-zero">Below Zero</RouterLink></li>
-            <li><RouterLink to="/subnautica-2">Subnautica 2</RouterLink></li>
-            <li><RouterLink to="/maps/subnautica">Map · SN1</RouterLink></li>
-            <li><RouterLink to="/maps/subnautica-below-zero">Map · BZ</RouterLink></li>
+            <li><a href="/subnautica">Subnautica</a></li>
+            <li><a href="/subnautica-below-zero">Below Zero</a></li>
+            <li><a href="/subnautica-2">Subnautica 2</a></li>
+            <li><a href="/maps/subnautica">Map · SN1</a></li>
+            <li><a href="/maps/subnautica-below-zero">Map · BZ</a></li>
           </ul>
         </nav>
       </div>

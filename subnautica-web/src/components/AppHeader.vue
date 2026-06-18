@@ -2,12 +2,12 @@
   <header class="app-header" :data-menu-open="menuOpen ? 'true' : 'false'" role="banner">
     <div class="app-header__accent" aria-hidden="true" />
     <div class="container app-header__inner">
-      <RouterLink class="app-header__brand" to="/" aria-label="Subnautica Map home" @click="menuOpen = false">
+      <a class="app-header__brand" href="/" aria-label="Subnautica Map home" @click="menuOpen = false">
         <img class="app-header__logo" src="/images/logo.webp" alt="" decoding="async" />
         <span class="app-header__title-wrap">
           <span class="app-header__title">Subnautica</span>
         </span>
-      </RouterLink>
+      </a>
       <button
         type="button"
         class="app-header__pill"
@@ -24,39 +24,38 @@
         :data-open="menuOpen ? 'true' : 'false'"
         aria-label="Primary"
       >
-        <RouterLink
+        <a
           class="app-header__pill"
           :class="{ 'app-header__pill--active': navKey === 'home' }"
-          to="/"
+          href="/"
           @click="menuOpen = false"
         >
           Home
-        </RouterLink>
-        <RouterLink
+        </a>
+        <a
           class="app-header__pill"
           :class="{ 'app-header__pill--active': navKey === 'subnautica' }"
-          to="/subnautica"
+          href="/subnautica"
           @click="menuOpen = false"
         >
           Subnautica
-        </RouterLink>
-        <RouterLink
+        </a>
+        <a
           class="app-header__pill"
           :class="{ 'app-header__pill--active': navKey === 'subnautica-2' }"
-          to="/subnautica-2"
+          href="/subnautica-2"
           @click="menuOpen = false"
         >
           Subnautica 2
-        </RouterLink>
-        <RouterLink
+        </a>
+        <a
           class="app-header__pill"
           :class="{ 'app-header__pill--active': navKey === 'subnautica-below-zero' }"
-          to="/subnautica-below-zero"
+          href="/subnautica-below-zero"
           @click="menuOpen = false"
         >
           Subnautica Below Zero
-        </RouterLink>
-        
+        </a>
       </nav>
     </div>
   </header>

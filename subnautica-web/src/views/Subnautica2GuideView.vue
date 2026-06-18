@@ -47,8 +47,8 @@
                 <li>Expect shader compilation hitches and tuning passes on fresh installs—normal for large open-world UE titles.</li>
                 <li>Co-op scheduling works best when your crew agrees on spoiler boundaries and save-backup duties before each session.</li>
                 <li>
-                  Returning from <RouterLink to="/subnautica">Subnautica</RouterLink> or
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink>? Mechanics rhyme with older games but
+                  Returning from <a href="/subnautica">Subnautica</a> or
+                  <a href="/subnautica-below-zero">Below Zero</a>? Mechanics rhyme with older games but
                   recipes, biomes, and story are new.
                 </li>
               </ul>
@@ -58,7 +58,7 @@
                   >interactive map</a
                 >
                 section; the
-                <RouterLink to="/">home page</RouterLink>
+                <a href="/">home page</a>
                 explains how this overview treats spoilers. Subnautica 2 mod listings will appear in the Mods section when
                 we add curated entries; until then use your storefront and official Unknown Worlds channels for tooling
                 news.
@@ -85,9 +85,9 @@
             <p class="gh-section-intro">Open the full-screen Map Genie–based atlas: biomes, pins, and search—same tools as the other titles.</p>
           </div>
           <div class="gh-maprow" role="list" aria-label="Map entry">
-            <RouterLink
+            <a
               class="gh-mapslot gh-mapslot--sn2"
-              to="/maps/subnautica-2"
+              href="/maps/subnautica-2"
               role="listitem"
               aria-label="Open Subnautica 2 map"
             >
@@ -99,7 +99,7 @@
                 <p class="gh-mapslot__desc">MapLibre viewer with live Map Genie world data, markers, and categories.</p>
                 <span class="gh-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
           </div>
         </section>
 
@@ -110,7 +110,7 @@
           </div>
           <ul v-if="hubGuides.length" class="gh-cardstack" role="list">
             <li v-for="g in hubGuides" :key="g.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--sn2" :to="`/guides/${g.addressBar}`">
+              <a class="gh-vcard gh-mapslot--sn2" :href="`/guides/${g.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="g.imageUrl" :alt="g.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -122,7 +122,7 @@
                   <p class="gh-vcard__desc">{{ g.description }}</p>
                   <span class="gh-vcard__action">Read guide</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No guides for this title yet.</p>
@@ -135,7 +135,7 @@
           </div>
           <ul v-if="hubMods.length" class="gh-cardstack" role="list">
             <li v-for="m in hubMods" :key="m.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--sn2" :to="`/mods/${m.addressBar}`">
+              <a class="gh-vcard gh-mapslot--sn2" :href="`/mods/${m.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="m.imageUrl" :alt="m.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -147,7 +147,7 @@
                   <p class="gh-vcard__desc">{{ m.description }}</p>
                   <span class="gh-vcard__action">Open mod</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No mods for this title yet.</p>
@@ -171,7 +171,7 @@
                 </p>
                 <p>
                   While mod support matures, bookmark the
-                  <RouterLink to="/guides/sn2-early-access-co-op-players-guide">early access &amp; co-op players guide</RouterLink>
+                  <a href="/guides/sn2-early-access-co-op-players-guide">early access &amp; co-op players guide</a>
                   on this page
                   for save hygiene and squad etiquette.
                 </p>
@@ -220,7 +220,7 @@
                   <li>Shader precompilation can look like a hang on first boot; wait several minutes before force-quitting.</li>
                   <li>
                     When performance tuning, pair these notes with the
-                    <RouterLink to="/guides/sn2-early-access-co-op-players-guide">performance checklist</RouterLink> in that
+                    <a href="/guides/sn2-early-access-co-op-players-guide">performance checklist</a> in that
                     players guide.
                   </li>
                 </ul>
@@ -242,8 +242,8 @@
                 <p>
                   It continues the franchise’s underwater survival fantasy on a <strong>new</strong> world. Treat lore
                   connections as spoilers and discover them in-game when possible. Older titles remain on
-                  <RouterLink to="/subnautica">Subnautica</RouterLink> and
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> overview pages.
+                  <a href="/subnautica">Subnautica</a> and
+                  <a href="/subnautica-below-zero">Below Zero</a> overview pages.
                 </p>
               </div>
             </article>
@@ -253,7 +253,7 @@
                 <p>
                   Survival games sometimes invalidate saves after major world updates. Keep manual backups and read wipe
                   warnings in official patch notes—tips also appear in
-                  <RouterLink to="/guides/sn2-early-access-co-op-players-guide">early access &amp; co-op players guide</RouterLink>.
+                  <a href="/guides/sn2-early-access-co-op-players-guide">early access &amp; co-op players guide</a>.
                 </p>
               </div>
             </article>
@@ -261,10 +261,10 @@
               <h3 class="gh-faq-row__q">Where is the interactive map?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  Open the <RouterLink to="/maps/subnautica-2">Subnautica 2 interactive map</RouterLink> for the full-screen
+                  Open the <a href="/maps/subnautica-2">Subnautica 2 interactive map</a> for the full-screen
                   atlas (Map Genie tiles and locations). The original games use
-                  <RouterLink to="/maps/subnautica">Subnautica</RouterLink> and
-                  <RouterLink to="/maps/subnautica-below-zero">Below Zero</RouterLink> routes.
+                  <a href="/maps/subnautica">Subnautica</a> and
+                  <a href="/maps/subnautica-below-zero">Below Zero</a> routes.
                 </p>
               </div>
             </article>
@@ -272,10 +272,10 @@
               <h3 class="gh-faq-row__q">How do I compare all three games quickly?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  Use the <RouterLink to="/">home page</RouterLink> map row, then open each title (
-                  <RouterLink to="/subnautica">Subnautica</RouterLink>,
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink>,
-                  <RouterLink to="/subnautica-2">Subnautica 2</RouterLink>) for tailored guides and mods.
+                  Use the <a href="/">home page</a> map row, then open each title (
+                  <a href="/subnautica">Subnautica</a>,
+                  <a href="/subnautica-below-zero">Below Zero</a>,
+                  <a href="/subnautica-2">Subnautica 2</a>) for tailored guides and mods.
                 </p>
               </div>
             </article>

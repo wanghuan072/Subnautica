@@ -35,7 +35,7 @@
       <p>
         Game names, logos, and screenshots may appear under fair use or similar doctrines for commentary and reference.
         Commercial reuse of site layout, custom vector art created for subnauticamap.org, or long excerpts of original
-        prose may require prior written permission. See also the <RouterLink to="/copyright">Copyright</RouterLink> page
+        prose may require prior written permission. See also the <a href="/copyright">Copyright</a> page
         for trademark lines required by community norms.
       </p>
 
@@ -81,7 +81,7 @@
 
       <h2>Contact</h2>
       <p>
-        Questions about these terms can be sent via the address on the <RouterLink to="/contact">Contact</RouterLink>
+        Questions about these terms can be sent via the address on the <a href="/contact">Contact</a>
         page. Include “terms” in the subject line so the message can be triaged quickly.
       </p>
       <p><strong>Last updated:</strong> May 12, 2026</p>

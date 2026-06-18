@@ -53,8 +53,8 @@
               </ul>
               <p class="gh-rich-foot">
                 This fan site is <strong>not</strong> affiliated with Unknown Worlds. For the polar follow-up on the
-                same planet, see <RouterLink to="/subnautica-below-zero">Subnautica: Below Zero</RouterLink>; for the
-                wider site overview, start at the <RouterLink to="/">home page</RouterLink>. Full-screen atlas:
+                same planet, see <a href="/subnautica-below-zero">Subnautica: Below Zero</a>; for the
+                wider site overview, start at the <a href="/">home page</a>. Full-screen atlas:
                 <a href="#hub-map" class="gh-rich-foot__anchor" @click.prevent="scrollToSection('hub-map')"
                   >Interactive map</a
                 >.
@@ -81,9 +81,9 @@
             <p class="gh-section-intro">Open the full-screen browser atlas: biomes, resource pins, optional cave sheet.</p>
           </div>
           <div class="gh-maprow" role="list" aria-label="Map entry">
-            <RouterLink
+            <a
               class="gh-mapslot gh-mapslot--sn1"
-              to="/maps/subnautica"
+              href="/maps/subnautica"
               role="listitem"
               aria-label="Open Subnautica map"
             >
@@ -95,7 +95,7 @@
                 <p class="gh-mapslot__desc">Biome layers, pins, and cave sheets for this title.</p>
                 <span class="gh-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
           </div>
         </section>
 
@@ -106,7 +106,7 @@
           </div>
           <ul v-if="hubGuides.length" class="gh-cardstack" role="list">
             <li v-for="g in hubGuides" :key="g.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--sn1" :to="`/guides/${g.addressBar}`">
+              <a class="gh-vcard gh-mapslot--sn1" :href="`/guides/${g.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="g.imageUrl" :alt="g.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -118,7 +118,7 @@
                   <p class="gh-vcard__desc">{{ g.description }}</p>
                   <span class="gh-vcard__action">Read guide</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No guides for this title yet.</p>
@@ -131,7 +131,7 @@
           </div>
           <ul v-if="hubMods.length" class="gh-cardstack" role="list">
             <li v-for="m in hubMods" :key="m.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--sn1" :to="`/mods/${m.addressBar}`">
+              <a class="gh-vcard gh-mapslot--sn1" :href="`/mods/${m.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="m.imageUrl" :alt="m.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -143,7 +143,7 @@
                   <p class="gh-vcard__desc">{{ m.description }}</p>
                   <span class="gh-vcard__action">Open mod</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No mods for this title yet.</p>
@@ -169,9 +169,9 @@
                 </p>
                 <p>
                   If you are browsing graphics tweaks, see the listing for
-                  <RouterLink to="/mods/mod-sn1-nexus-1-internetslive-vibrant-shader-dx11">
+                  <a href="/mods/mod-sn1-nexus-1-internetslive-vibrant-shader-dx11">
                     Nexus Mods #1 — InternetsLIVE Vibrant Shader
-                  </RouterLink>
+                  </a>
                   (legacy SweetFX stack—read compatibility notes) and keep a vanilla save backup before experimenting.
                 </p>
               </div>
@@ -216,7 +216,7 @@
                   <li>Optional VR depends on your SKU and hardware—read the store’s VR badge, not forum rumors.</li>
                   <li>
                     For route planning without alt-tabbing through wikis, pair these specs with the
-                    <RouterLink to="/maps/subnautica">local atlas</RouterLink>.
+                    <a href="/maps/subnautica">local atlas</a>.
                   </li>
                 </ul>
               </div>
@@ -237,7 +237,7 @@
                 <p>
                   Yes in practice: after the opening beats you can explore most of the crater freely, limited chiefly by
                   oxygen, depth tooling, and story gates. The
-                  <RouterLink to="/maps/subnautica">interactive map</RouterLink> on this site helps you plan shallow
+                  <a href="/maps/subnautica">interactive map</a> on this site helps you plan shallow
                   circuits before you commit to long dives.
                 </p>
               </div>
@@ -247,7 +247,7 @@
               <div class="gh-faq-row__a gh-rich">
                 <p>
                   No.
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> is a standalone campaign on the same
+                  <a href="/subnautica-below-zero">Below Zero</a> is a standalone campaign on the same
                   planet but with a new protagonist and colder surface biomes. Playing Subnautica first adds context for
                   returning players, not a hard requirement.
                 </p>
@@ -259,7 +259,7 @@
                 <p>
                   Not in the shipped single-player product. Unofficial multiplayer exists only through community mods
                   and launchers; treat them as experimental. Official co-op is a headline feature of the newer
-                  <RouterLink to="/subnautica-2">Subnautica 2</RouterLink> marketing—see that title’s overview for how access works in
+                  <a href="/subnautica-2">Subnautica 2</a> marketing—see that title’s overview for how access works in
                   each phase.
                 </p>
               </div>
@@ -269,9 +269,9 @@
               <div class="gh-faq-row__a gh-rich">
                 <p>
                   Start with the
-                  <RouterLink to="/guides/sn1-survival-and-progression-players-guide">survival and progression players guide</RouterLink>
+                  <a href="/guides/sn1-survival-and-progression-players-guide">survival and progression players guide</a>
                   in this section, then cross-check your route on the
-                  <RouterLink to="/maps/subnautica">map viewer</RouterLink> before you push depth.
+                  <a href="/maps/subnautica">map viewer</a> before you push depth.
                 </p>
               </div>
             </article>

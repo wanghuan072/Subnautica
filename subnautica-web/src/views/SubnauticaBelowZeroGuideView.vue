@@ -48,13 +48,13 @@
                 <li>Environmental audio logs continue the series’ style of optional story depth.</li>
               </ul>
               <p class="gh-rich-foot">
-                New to the planet? Many players still begin with <RouterLink to="/subnautica">Subnautica (2018)</RouterLink>
+                New to the planet? Many players still begin with <a href="/subnautica">Subnautica (2018)</a>
                 for pacing, but it is optional. Atlas card:
                 <a href="#hub-map" class="gh-rich-foot__anchor" @click.prevent="scrollToSection('hub-map')"
                   >Below Zero interactive map</a
                 >
                 · Site index:
-                <RouterLink to="/">home</RouterLink>.
+                <a href="/">home</a>.
               </p>
             </div>
             <div class="gh-hero-actions">
@@ -78,9 +78,9 @@
             <p class="gh-section-intro">Open the full-screen Below Zero atlas: ice shelf, underwater biomes, and POI pins.</p>
           </div>
           <div class="gh-maprow" role="list" aria-label="Map entry">
-            <RouterLink
+            <a
               class="gh-mapslot gh-mapslot--bz"
-              to="/maps/subnautica-below-zero"
+              href="/maps/subnautica-below-zero"
               role="listitem"
               aria-label="Open Subnautica Below Zero map"
             >
@@ -92,7 +92,7 @@
                 <p class="gh-mapslot__desc">Biome layers, pins, and cave sheets for this title.</p>
                 <span class="gh-mapslot__action">Open map</span>
               </div>
-            </RouterLink>
+            </a>
           </div>
         </section>
 
@@ -103,7 +103,7 @@
           </div>
           <ul v-if="hubGuides.length" class="gh-cardstack" role="list">
             <li v-for="g in hubGuides" :key="g.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--bz" :to="`/guides/${g.addressBar}`">
+              <a class="gh-vcard gh-mapslot--bz" :href="`/guides/${g.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="g.imageUrl" :alt="g.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -115,7 +115,7 @@
                   <p class="gh-vcard__desc">{{ g.description }}</p>
                   <span class="gh-vcard__action">Read guide</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No guides for this title yet.</p>
@@ -128,7 +128,7 @@
           </div>
           <ul v-if="hubMods.length" class="gh-cardstack" role="list">
             <li v-for="m in hubMods" :key="m.id" role="listitem" class="gh-cardstack__li">
-              <RouterLink class="gh-vcard gh-mapslot--bz" :to="`/mods/${m.addressBar}`">
+              <a class="gh-vcard gh-mapslot--bz" :href="`/mods/${m.addressBar}`">
                 <div class="gh-vcard__media">
                   <img :src="m.imageUrl" :alt="m.imageAlt" width="960" height="540" loading="lazy" />
                 </div>
@@ -140,7 +140,7 @@
                   <p class="gh-vcard__desc">{{ m.description }}</p>
                   <span class="gh-vcard__action">Open mod</span>
                 </div>
-              </RouterLink>
+              </a>
             </li>
           </ul>
           <p v-else class="gh-empty">No mods for this title yet.</p>
@@ -206,7 +206,7 @@
                   <li>Controllers and keyboard/mouse are supported on PC per storefront metadata.</li>
                   <li>If frame pacing stutters after a patch, cap volumetrics and retest before blaming hardware.</li>
                   <li>
-                    Use the <RouterLink to="/maps/subnautica-below-zero">Below Zero atlas</RouterLink> to rehearse surface
+                    Use the <a href="/maps/subnautica-below-zero">Below Zero atlas</a> to rehearse surface
                     hops without opening ad-heavy wikis.
                   </li>
                 </ul>
@@ -226,7 +226,7 @@
               <h3 class="gh-faq-row__q">Do I need to finish Subnautica first?</h3>
               <div class="gh-faq-row__a gh-rich">
                 <p>
-                  No. Familiarity with <RouterLink to="/subnautica">Subnautica</RouterLink> helps you recognize returning
+                  No. Familiarity with <a href="/subnautica">Subnautica</a> helps you recognize returning
                   props and tone, but Below Zero is its own campaign with separate saves.
                 </p>
               </div>
@@ -236,7 +236,7 @@
               <div class="gh-faq-row__a gh-rich">
                 <p>
                   It is still planet 4546B, but the playable space, biomes, and story beats are rebuilt for polar regions.
-                  Use the dedicated <RouterLink to="/maps/subnautica-below-zero">Below Zero map</RouterLink> rather than the
+                  Use the dedicated <a href="/maps/subnautica-below-zero">Below Zero map</a> rather than the
                   original atlas.
                 </p>
               </div>
@@ -246,8 +246,8 @@
               <div class="gh-faq-row__a gh-rich">
                 <p>
                   No—each title keeps its own save slots. Switching between games? Browse
-                  <RouterLink to="/subnautica">Subnautica</RouterLink> and
-                  <RouterLink to="/subnautica-below-zero">Below Zero</RouterLink> pages separately.
+                  <a href="/subnautica">Subnautica</a> and
+                  <a href="/subnautica-below-zero">Below Zero</a> pages separately.
                 </p>
               </div>
             </article>
@@ -256,9 +256,9 @@
               <div class="gh-faq-row__a gh-rich">
                 <p>
                   Open the
-                  <RouterLink to="/guides/bz-arctic-and-seatruck-players-guide">arctic and Seatruck players guide</RouterLink>,
+                  <a href="/guides/bz-arctic-and-seatruck-players-guide">arctic and Seatruck players guide</a>,
                   then align
-                  waypoints on the <RouterLink to="/maps/subnautica-below-zero">interactive map</RouterLink>.
+                  waypoints on the <a href="/maps/subnautica-below-zero">interactive map</a>.
                 </p>
               </div>
             </article>

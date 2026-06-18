@@ -4,9 +4,9 @@
       <div class="container detail__hero">
         <div class="detail__hero-text">
           <nav class="detail__crumb" aria-label="Breadcrumb">
-            <RouterLink to="/">Home</RouterLink>
+            <a href="/">Home</a>
             <span class="detail__crumb-dot" aria-hidden="true" />
-            <RouterLink :to="hubPath">{{ hubTitle }}</RouterLink>
+            <a :href="hubPath">{{ hubTitle }}</a>
             <span class="detail__crumb-dot" aria-hidden="true" />
             <span class="detail__crumb-here">{{ mod.title }}</span>
           </nav>
@@ -63,7 +63,7 @@
               Download
             </a>
             <p v-else class="detail__nodl">Download link not set.</p>
-            <RouterLink class="detail__back" :to="hubPath">Return to game page</RouterLink>
+            <a class="detail__back" :href="hubPath">Return to game page</a>
           </div>
         </aside>
       </div>
@@ -71,7 +71,7 @@
   </div>
   <div v-else class="container detail detail--void">
     <p>Mod not found.</p>
-    <RouterLink to="/">Home</RouterLink>
+    <a href="/">Home</a>
   </div>
 </template>
 

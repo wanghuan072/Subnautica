@@ -63,9 +63,9 @@
 
       <h2>Related pages</h2>
       <p>
-        Read the <RouterLink to="/privacy">Privacy</RouterLink> policy for data practices,
-        <RouterLink to="/terms">Terms of use</RouterLink> for acceptable use, and
-        <RouterLink to="/copyright">Copyright</RouterLink> for trademark attribution.
+        Read the <a href="/privacy">Privacy</a> policy for data practices,
+        <a href="/terms">Terms of use</a> for acceptable use, and
+        <a href="/copyright">Copyright</a> for trademark attribution.
       </p>
     </div>
   </article>
